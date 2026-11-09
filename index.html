@@ -346,144 +346,93 @@ footer.sitefoot ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 <script>
 /* =========================================================================
    PUBLIC PRACTICE DEMO CONTENT - fictional "WNA Hospital".
-   No clinical content. Every guideline is a blank placeholder so people can
-   practice getting around the site. Nothing here comes from a real hospital,
-   and nothing here is medical guidance.
+   Deliberately small, like a first pass built in a day or two.
+   Two guidelines open (Behavioral Health, Cardiovascular), with blank
+   placeholder text; four more are titles only. No clinical content, nothing
+   from a real hospital, not medical guidance.
    ========================================================================= */
 
 const BLANK = "Blank guideline for display purposes only. No clinical content.";
-const PH = (n) => Array.from({ length: n }, (_, i) => i === 0 ? BLANK : "Placeholder line " + (i + 1) + ". A real guideline would put its content here.");
-const quickReview = (extra = {}) => Object.assign({
+const PH = (n) => Array.from({ length: n }, (_, i) => i === 0 ? BLANK : "Placeholder line " + (i + 1) + ". The real guideline's content goes here.");
+const blankReview = (sections) => ({
   glance: [
     { label: "Calories", value: "[Placeholder]", sub: "Blank guideline for display only" },
     { label: "Protein", value: "[Placeholder]", sub: "Blank guideline for display only" },
     { label: "Fluid", value: "[Placeholder]", sub: "Blank guideline for display only" }
   ],
-  sections: [
-    { h: "Estimating needs", items: PH(3) },
-    { h: "Assessment", items: PH(3) },
-    { h: "Nutrition support", items: PH(2) },
-    { h: "Monitoring", items: PH(2) },
-    { h: "Example table", table: { head: ["Item", "Column A", "Column B"], rows: [["Row 1", "Placeholder", "Placeholder"], ["Row 2", "Placeholder", "Placeholder"], ["Row 3", "Placeholder", "Placeholder"]], note: "Tables in SharePoint are made in the Text web part. This one is empty on purpose." } }
-  ],
-  refs: ["Placeholder reference. A real guideline lists its sources here."]
-}, extra);
-
-const g = (id, title, specialty, revised, status, units, quick, extra = {}) => Object.assign({
-  id, title, specialty, year: revised.slice(-4), revised, status, units,
-  file: `WNA ${title} Guideline (blank sample).pdf`, keywords: "", sample: true
-}, quick ? quickReview(extra) : extra);
+  sections: sections.map((h) => ({ h, items: PH(3) })),
+  refs: ["Placeholder reference. The real guideline lists its sources here."]
+});
 
 const GUIDELINES = [
-  g("critical-care", "Critical Care", "Critical care", "10/2025", "Approved", ["ICU 5"], true),
-  g("refeeding", "Refeeding Syndrome", "Nutrition support", "10/2025", "Approved", ["All units"], true),
-  g("renal", "Renal", "Renal", "7/2025", "Approved", ["ICU 5", "4 East"], true),
-  g("parenteral", "Parenteral Nutrition", "Nutrition support", "3/2024", "Approved", ["All units"], true),
-  g("wound", "Wound Care", "Wound", "9/2024", "Approved", ["All units"], true),
-  g("diabetes", "Diabetes", "Endocrine", "7/2023", "Approved", ["All units"], true),
-  g("liver", "Liver Disease", "GI / Hepatology", "1/2025", "Approved", ["4 East", "ICU 5"], true),
-  g("behavioral-health", "Behavioral Health", "Behavioral health", "6/2021", "In revision", ["3 North"], true,
-    { nextVersion: "Revision due 01/2027 (sample)", revisionNote: "Sample banner. This is what a page looks like while its guideline is being revised. Readers keep using the approved version until the new one is published." }),
-  g("estimated-needs", "Estimated Needs Chart", "Estimated needs", "9/2025", "Approved", ["All units"], true),
-  g("cardiovascular", "Cardiovascular", "Cardiac", "2024", "Approved", ["CVICU 6"], false),
-  g("oncology", "Oncology", "Oncology", "2023", "Approved", ["7 West"], false),
-  g("older-adults", "Older Adults", "Geriatrics", "2024", "Approved", ["All units"], false),
-  g("pediatrics", "Pediatrics", "Pediatrics", "2024", "Approved", ["Peds 9"], false),
-  g("pregnancy", "Pregnancy", "Women's health", "2024", "Approved", ["2 South"], false),
-  g("spinal-cord", "Spinal Cord Injury", "Neuro / Rehab", "2025", "Approved", ["8 North"], false),
-  g("bariatrics", "Bariatrics", "Surgery", "2023", "Approved", ["4 East"], false),
-  g("copd", "COPD", "Pulmonary", "2023", "Approved", ["4 East"], false),
-  g("pancreatitis", "Pancreatitis", "GI / Hepatology", "2021", "Due for review", ["4 East", "ICU 5"], false),
-  g("eating-disorders", "Eating Disorders", "Behavioral health", "2025", "Approved", ["3 North"], false)
+  Object.assign({ id: "behavioral-health", title: "Behavioral Health", specialty: "Behavioral health", year: "2021", revised: "6/2021",
+    status: "In revision", nextVersion: "Revision due 01/2027 (sample)", units: ["3 North"], sample: true,
+    file: "WNA Behavioral Health Guideline (blank sample).pdf", keywords: "behavioral mental health psychiatry",
+    revisionNote: "Sample banner. This is how a page looks while its guideline is being revised. Readers keep using the approved version until the new one is published." },
+    blankReview(["Assessment", "Estimating needs", "Diet patterns", "Medications", "When a patient won't eat"])),
+  Object.assign({ id: "cardiovascular", title: "Cardiovascular", specialty: "Cardiac", year: "2024", revised: "3/2024",
+    status: "Approved", units: ["CVICU 6", "4 East"], sample: true,
+    file: "WNA Cardiovascular Guideline (blank sample).pdf", keywords: "heart cardiac" },
+    blankReview(["Estimating needs", "Heart failure", "After heart surgery", "Patient education"])),
+  { id: "critical-care", title: "Critical Care", specialty: "Critical care", year: "2025", revised: "10/2025", status: "Approved", units: ["ICU 5", "CVICU 6"], file: "WNA Critical Care Guideline (blank sample).pdf", keywords: "ICU", sample: true },
+  { id: "diabetes", title: "Diabetes", specialty: "Endocrine", year: "2023", revised: "7/2023", status: "Approved", units: ["4 East"], file: "WNA Diabetes Guideline (blank sample).pdf", keywords: "", sample: true },
+  { id: "renal", title: "Renal", specialty: "Renal", year: "2025", revised: "7/2025", status: "Approved", units: ["4 East", "ICU 5"], file: "WNA Renal Guideline (blank sample).pdf", keywords: "kidney", sample: true },
+  { id: "wound", title: "Wound Care", specialty: "Wound", year: "2021", revised: "9/2021", status: "Due for review", units: ["All units"], file: "WNA Wound Care Guideline (blank sample).pdf", keywords: "", sample: true }
 ];
 
 const REFERENCE_DOCS = [
-  { title: "WNA Nutrition Formulary (sample)", detail: "Blank sample document", file: "WNA Nutrition Formulary (sample).pdf" },
-  { title: "Diet order manual (sample)", detail: "Blank sample document", file: "Diet order manual (sample).pdf" },
-  { title: "Career ladder policy (sample)", detail: "Blank sample document", file: "Career ladder policy (sample).pdf" }
+  { title: "WNA Nutrition Formulary (sample)", detail: "Blank sample document", file: "WNA Nutrition Formulary (sample).pdf" }
 ];
 
 const PB = (id, title, category, units, tags, summary, steps, related, extra = {}) =>
   Object.assign({ id, title, category, units, tags, updated: "Sample", owner: "Sample owner", sample: true, summary, steps, related }, extra);
 
 const PLAYBOOK = [
-  PB("covering-unfamiliar-unit", "Covering a unit you don't usually work", "Getting oriented", ["All units"], ["coverage", "orientation", "float"],
-    "A short checklist for the first hour on an unfamiliar unit (sample).",
-    ["Open the Units page and pick the unit you're covering.", "Note the huddle time and charge RN contact on the unit page.", "Open the quick review for each guideline the unit page lists.", "Check the Playbook pages linked from the unit page.", "Ask the unit's primary RD if anything is unclear."],
-    ["estimated-needs"]),
-  PB("bh-first-visit", "First visit on a behavioral health unit", "Behavioral health", ["3 North"], ["behavioral health", "assessment"],
-    "Sample page. Shows how a unit-specific playbook page is laid out.",
+  PB("covering-unfamiliar-unit", "Covering a unit you don't usually work", "Getting oriented", ["All units"], ["coverage", "float"],
+    "A short checklist for your first hour on an unfamiliar unit.",
+    ["Open Units and pick the unit you're covering.", "Note the huddle time and charge RN contact.", "Open the guidelines the unit page lists.", "Ask the unit's primary RD if anything is unclear."],
+    ["behavioral-health", "cardiovascular"]),
+  PB("bh-first-visit", "First visit on a behavioral health unit", "Behavioral health", ["3 North"], ["behavioral health"],
+    "Sample page showing how a unit-specific playbook page is laid out.",
     ["Placeholder step 1.", "Placeholder step 2.", "Placeholder step 3."], ["behavioral-health"]),
-  PB("draft-example", "Example of a draft page", "Behavioral health", ["3 North"], ["draft"],
-    "This page shows how a draft looks before it's approved. Drafts are hidden from readers in real SharePoint until published.",
-    ["Placeholder step 1.", "Placeholder step 2."], ["behavioral-health"], { draft: true }),
-  PB("note-conventions", "Note conventions for long-stay patients", "Documentation", ["3 North", "8 North"], ["documentation", "long stay"],
-    "Sample page about team documentation habits.",
-    ["Placeholder step 1.", "Placeholder step 2.", "Placeholder step 3."], ["behavioral-health"]),
-  PB("tube-feeding-setup", "Helping nursing set up tube feeding", "Nutrition support", ["All units"], ["tube feeding", "nursing"],
-    "Sample page. Clinical steps would live in the guideline, not here.",
-    ["Placeholder step 1.", "Placeholder step 2.", "See the linked guideline for clinical details (blank in this demo)."], ["refeeding", "parenteral"]),
-  PB("icu-starting-feeds", "Starting feeds in the ICU", "Nutrition support", ["ICU 5", "CVICU 6"], ["ICU", "enteral"],
-    "Sample page linking to a guideline instead of repeating its numbers.",
-    ["Placeholder step 1.", "Placeholder step 2.", "Open the Critical Care quick review (blank in this demo)."], ["critical-care"]),
-  PB("pn-recommendation", "Writing a parenteral nutrition recommendation", "Nutrition support", ["All units"], ["PN", "template", "pharmacy"],
-    "Sample page for a recommendation template.",
-    ["Placeholder step 1.", "Placeholder step 2.", "Placeholder step 3."], ["parenteral", "refeeding"]),
-  PB("ons-ordering", "Choosing an oral supplement", "Formulary", ["All units"], ["supplement", "formulary"],
-    "Sample page. Starts from the formulary in Reference documents.",
-    ["Open the WNA Nutrition Formulary (sample) under Reference documents.", "Placeholder step 2."], ["wound"]),
-  PB("weekend-handoff", "Weekend and holiday handoff", "Coverage", ["All units"], ["weekend", "holiday", "handoff"],
+  PB("cardiac-class", "Covering the cardiac education class", "Classes", ["CVICU 6", "4 East"], ["cardiac", "class"],
+    "Sample page for a recurring team task.",
+    ["Placeholder step 1.", "Placeholder step 2."], ["cardiovascular"]),
+  PB("weekend-handoff", "Weekend handoff", "Coverage", ["All units"], ["weekend", "handoff"],
     "What to leave for the weekend RD so nothing gets lost (sample).",
-    ["Add patients needing follow-up to the shared handoff list by Friday afternoon.", "Flag anyone on new nutrition support.", "Note pending labs and what you'd change based on them."], ["refeeding"]),
-  PB("risk-screen", "Quick risk screen", "Nutrition support", ["All units"], ["screen"],
-    "Sample page for a short screening checklist.",
-    ["Placeholder step 1.", "Placeholder step 2."], ["refeeding"])
+    ["Add patients needing follow-up to the shared handoff list by Friday afternoon.", "Note pending labs and what you'd change based on them."], [])
 ];
 
 const UNITS = [
-  { code: "3 North", name: "Behavioral Health", type: "Behavioral health", huddle: "9:00 (sample)", phone: "x0-0000", guidelines: ["behavioral-health", "eating-disorders", "refeeding"], notes: "Sample unit. Check in with the RN before visits.", playbook: ["bh-first-visit", "note-conventions", "draft-example"] },
-  { code: "4 East", name: "Medical / Surgical", type: "Med/Surg", huddle: "8:30 (sample)", phone: "x0-0000", guidelines: ["liver", "renal", "copd", "pancreatitis"], notes: "Sample unit.", playbook: ["ons-ordering"] },
-  { code: "ICU 5", name: "Medical / Surgical ICU", type: "Critical care", huddle: "8:00 (sample)", phone: "x0-0000", guidelines: ["critical-care", "refeeding", "parenteral", "renal"], notes: "Sample unit.", playbook: ["icu-starting-feeds", "pn-recommendation", "risk-screen"] },
-  { code: "CVICU 6", name: "Cardiovascular ICU", type: "Critical care", huddle: "8:15 (sample)", phone: "x0-0000", guidelines: ["cardiovascular", "critical-care"], notes: "Sample unit.", playbook: ["icu-starting-feeds"] },
-  { code: "7 West", name: "Oncology", type: "Oncology", huddle: "9:15 (sample)", phone: "x0-0000", guidelines: ["oncology", "parenteral"], notes: "Sample unit.", playbook: ["ons-ordering"] },
-  { code: "2 South", name: "Mother-Baby", type: "Women's health", huddle: "9:30 (sample)", phone: "x0-0000", guidelines: ["pregnancy", "diabetes"], notes: "Sample unit.", playbook: [] },
-  { code: "8 North", name: "Rehab", type: "Neuro / Rehab", huddle: "9:45 (sample)", phone: "x0-0000", guidelines: ["spinal-cord", "wound"], notes: "Sample unit.", playbook: ["note-conventions"] },
-  { code: "Peds 9", name: "Pediatrics", type: "Pediatrics", huddle: "8:45 (sample)", phone: "x0-0000", guidelines: ["pediatrics"], notes: "Sample unit.", playbook: [] }
+  { code: "3 North", name: "Behavioral Health", type: "Behavioral health", huddle: "9:00 (sample)", phone: "x0-0000", guidelines: ["behavioral-health"], notes: "Sample unit. Check in with the RN before visits.", playbook: ["bh-first-visit"] },
+  { code: "4 East", name: "Medical / Surgical", type: "Med/Surg", huddle: "8:30 (sample)", phone: "x0-0000", guidelines: ["diabetes", "renal", "cardiovascular"], notes: "Sample unit.", playbook: ["cardiac-class"] },
+  { code: "ICU 5", name: "Medical / Surgical ICU", type: "Critical care", huddle: "8:00 (sample)", phone: "x0-0000", guidelines: ["critical-care", "renal"], notes: "Sample unit.", playbook: [] },
+  { code: "CVICU 6", name: "Cardiovascular ICU", type: "Critical care", huddle: "8:15 (sample)", phone: "x0-0000", guidelines: ["cardiovascular", "critical-care"], notes: "Sample unit.", playbook: ["cardiac-class"] }
 ];
 
 const SOP = (id, title, category, icon, summary, steps, links = []) => ({ id, title, category, icon, summary, steps, links, updated: "Sample", sample: true });
 const SOPS = [
   SOP("time-off", "Request time off", "Scheduling", "cal", "Sample steps for a time-off request.", ["Check the team calendar for coverage.", "Submit the request in the scheduling system (link goes here).", "Watch for manager approval."], ["Scheduling system (placeholder)"]),
   SOP("productivity", "Submit monthly productivity", "Reporting", "chart", "Sample steps for monthly reporting.", ["Keep your daily log.", "Total the month's counts.", "Enter them on the reporting form (link goes here)."], ["Reporting form (placeholder)"]),
-  SOP("huddle", "Lead the daily huddle", "Daily operations", "people", "Sample steps for running huddle.", ["Pull the census and new consults.", "Flag high-priority patients.", "Assign coverage gaps."]),
-  SOP("holiday", "Weekend and holiday coverage", "Scheduling", "cal", "Sample coverage process.", ["Check the holiday rotation.", "Confirm your weekend role.", "Arrange swaps with a colleague, then tell your manager."]),
-  SOP("career-ladder", "Apply for career ladder advancement", "Career", "star", "Sample process. See the sample policy in Reference documents.", ["Read the policy.", "Work through the checklist.", "Submit by the deadline."], ["Career ladder policy (sample)"]),
-  SOP("formulary-issue", "Report a formulary or product issue", "Formulary", "box", "Sample reporting steps.", ["Note the product and what happened.", "Submit the form (Microsoft Forms placeholder)."], ["Product issue form (placeholder)"]),
-  SOP("precepting", "Precepting students and interns", "Education", "people", "Sample setup steps.", ["Confirm rotation dates.", "Request system access early.", "Share the Playbook as a starting point."]),
-  SOP("onboarding", "New RD onboarding checklist", "Education", "check", "Sample first-two-weeks checklist.", ["Get system access.", "Shadow on each unit type.", "Read the quick reviews (blank in this demo)."])
+  SOP("huddle", "Lead the daily huddle", "Daily operations", "people", "Sample steps for running huddle.", ["Pull the census and new consults.", "Flag high-priority patients.", "Assign coverage gaps."])
 ];
 
 const NEWS = [
-  { title: "Welcome to the WNA Clinical Nutrition practice site", date: "Sample", blurb: "WNA Hospital is fictional. Click around: units, guidelines, playbook, and SOPs all link together.", tag: "Start here", link: "#/units", sample: true },
-  { title: "Try it: find a guideline from a unit page", date: "Sample", blurb: "Open Units, pick ICU 5, then open its Critical Care quick review. That's the on-the-floor path.", tag: "Practice", link: "#/units/ICU%205", sample: true },
-  { title: "Behavioral Health guideline in revision (sample)", date: "Sample", blurb: "Shows how a guideline under revision is flagged.", tag: "Guidelines", link: "#/guidelines/behavioral-health", sample: true },
-  { title: "Sample: new formulary posted", date: "Sample", blurb: "Placeholder news post to show the layout.", tag: "Formulary", link: "#/guidelines", sample: true }
+  { title: "Welcome to the WNA Clinical Nutrition practice site", date: "Sample", blurb: "WNA Hospital is fictional. Click around: units, guidelines, playbook, and SOPs link together.", tag: "Start here", link: "#/units", sample: true },
+  { title: "Try it: find a guideline from a unit page", date: "Sample", blurb: "Open Units, pick CVICU 6, then open the Cardiovascular guideline.", tag: "Practice", link: "#/units/CVICU%206", sample: true }
 ];
 
 const EVENTS = [
   { m: "JAN", d: "05", title: "Sample: team meeting", time: "11:45 AM - 12:15 PM" },
-  { m: "JAN", d: "12", title: "Sample: guideline review session", time: "1:00 PM" },
-  { m: "JAN", d: "19", title: "Sample: holiday coverage (staffed)", time: "All day" },
+  { m: "JAN", d: "12", title: "Sample: guideline review", time: "1:00 PM" },
   { m: "FEB", d: "02", title: "Sample: new hire orientation", time: "8:00 AM" }
 ];
 
 const QUICK_LINKS = [
-  { title: "Request time off", sub: "Scheduling SOP (sample)", icon: "cal", link: "#/operations/time-off" },
-  { title: "Submit productivity", sub: "Monthly reporting (sample)", icon: "chart", link: "#/operations/productivity" },
-  { title: "Estimated needs chart", sub: "Blank sample", icon: "calc", link: "#/guidelines/estimated-needs" },
+  { title: "Request time off", sub: "Scheduling", icon: "cal", link: "#/operations/time-off" },
+  { title: "Submit productivity", sub: "Monthly reporting", icon: "chart", link: "#/operations/productivity" },
   { title: "Nutrition formulary", sub: "Blank sample", icon: "box", link: "#/guidelines#reference" },
-  { title: "Covering a new unit", sub: "Playbook", icon: "check", link: "#/playbook/covering-unfamiliar-unit" },
-  { title: "Career ladder", sub: "Sample SOP", icon: "star", link: "#/operations/career-ladder" }
+  { title: "Covering a new unit", sub: "Playbook", icon: "check", link: "#/playbook/covering-unfamiliar-unit" }
 ];
 
 </script>
@@ -578,10 +527,26 @@ function startApp(C) {
   });
 
   /* ---------- build notes panel ---------- */
-  const buildNotes = (rows) => `
+  /* Site-owner build notes. Off in the public demo (false = false). Steps mirror BUILD-GUIDE.md. */
+  const SHOW_NOTES = false;
+  const STEPS = {
+    home: ["5. Home page", ["Edit the existing Home page.", "Full-width section: Hero web part, Tiles layout, 5 tiles. Upload an image and add alt text for each.", "Add a two-thirds left section.", "Left column: a Text web part heading, Quick links (Button layout) for saved searches, Quick links (Grid) to each unit page, and the News web part (Side-by-side).", "Right column: Quick links (List layout), Events (Compact), and Highlighted content showing recently updated guidelines, in a section with a Soft background.", "Publish."]],
+    guidelines: ["6. Practice guidelines page, and 3a for the library", ["Build the Practice Guidelines library and its columns first (guide 3a), including Choice pill colors and content approval.", "+ New > Page > blank. Title: Practice guidelines.", "Add a one-third left section.", "Left column: a 'How to use this page' Text web part, then a Document library web part showing Reference.", "Right column: a Document library web part showing Practice Guidelines.", "Publish. For checkbox filters, readers open the library full size and use the Filters pane."]],
+    quick: ["4 (Template A) and 7. Quick review pages", ["Build Template A once (guide 4), then: + New > Page > Saved on this site > Guideline quick review.", "Fill in the soft-background summary banner (and a revision banner if the guideline is in revision).", "Add Button web parts for Download approved and Report an issue, linked to the library file and the Forms survey.", "At a glance: a three-column section with a Soft background and one Text web part per card.", "Details: one collapsible section per topic (Edit properties > Make this section collapsible; set the name and default display).", "Copy numbers exactly from the approved document.", "Page details: Page type, Related guideline, Units. Publish.", "Copy the heading links into 'On this page', then paste the page address into the library's Quick review column."]],
+    playbook: ["3d and 8. RD Playbook", ["Add the Page type, Category, Units, Tags, Related guideline, Owner, and Last reviewed columns to the Pages library (guide 3d).", "Create a view named Playbook, filtered to Page type = Playbook.", "Point the RD Playbook nav link at that view. It has the search box and the Filters pane shown here.", "Make each entry from the Playbook article template (guide 8)."]],
+    article: ["4 (Template B) and 8. Playbook article", ["+ New > Page > Saved on this site > Playbook article.", "Write a one-line summary, then numbered steps, one action each.", "Link related guidelines in Quick links. Don't copy clinical numbers.", "Page details: Category, Units, Tags, Related guideline, Owner, Last reviewed.", "Turn on comments. Publish."]],
+    units: ["3c and 9. Units", ["Create the Units list (guide 3c): Unit code, Unit name, Type, Huddle, Charge RN phone, Go-to guidelines (Lookup), Before you start.", "Add one row per unit. Get phone numbers from the hospital directory.", "+ New > Page > blank, titled Unit quick reference, with a List web part showing Units.", "Publish."]],
+    unit: ["4 (Template C) and 9. Unit page", ["+ New > Page > Saved on this site > Unit page.", "Soft-background Text web part: Before you start.", "Three columns: Highlighted content for go-to guidelines (filter Units), Highlighted content for this unit's playbook pages (page property Units), and Contacts plus a People web part.", "Page details: Page type = Unit, Units = this unit. Publish."]],
+    operations: ["4 (Template D) and 10. Operations", ["Make each SOP from the SOP template.", "Make an Operations page: Quick links (Button layout) for the 4 most-used SOPs.", "Then add one Highlighted content web part per group, filtered by page property Category.", "Publish."]],
+    sop: ["4 (Template D) and 10. SOP page", ["+ New > Page > Saved on this site > SOP.", "Summary, numbered steps, and Quick links to the real systems and forms. Don't rebuild the systems.", "Page details: Page type = SOP, Category = the group. Publish."]],
+    search: ["12. Search", ["Nothing to build. The search box at the top of every page searches pages, lists, and the text inside files.", "To make a saved-search link: search once, copy the browser address, and paste it into a Quick link."]]
+  };
+  const buildNotes = (key, rows) => !SHOW_NOTES ? "" : `
     <section class="buildnotes" aria-label="SharePoint build notes">
-      <button type="button" class="ch" aria-expanded="false" aria-controls="bn-body">${ico("chev")} SharePoint build notes for this page (for site owners; hide before launch)</button>
+      <button type="button" class="ch" aria-expanded="false" aria-controls="bn-body">${ico("chev")} SharePoint build notes for this page (for site owners; not on the real site)</button>
       <div class="bn" id="bn-body" hidden>
+        ${STEPS[key] ? `<h2 style="font-size:15px;margin:4px 0 6px">Build this page</h2><ol style="margin:0 0 12px;padding-left:20px">${STEPS[key][1].map((x) => `<li style="margin:3px 0">${esc(x)}</li>`).join("")}</ol><p style="margin:0 0 12px" class="muted">Full walkthrough: BUILD-GUIDE.md, section ${esc(STEPS[key][0])}. No code or admin rights needed.</p>` : ""}
+        <h2 style="font-size:15px;margin:4px 0 6px">What each piece is</h2>
         <table><caption class="sr-only">Web parts used on this page</caption>
           <thead><tr><th scope="col">Element on page</th><th scope="col">Standard SharePoint feature</th><th scope="col">Setup</th></tr></thead>
           <tbody>${rows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody>
@@ -627,11 +592,11 @@ function startApp(C) {
           <h2 id="h-search">${ico("search", 18)} Find a guideline, playbook page, or SOP</h2>
           <form class="bigsearch" role="search" id="homesearch" aria-label="Home page search">
             <label for="homeq" class="sr-only">Search this site</label>
-            <input id="homeq" type="search" placeholder="Try: ICU, critical care, handoff, time off" autocomplete="off">
+            <input id="homeq" type="search" placeholder="Try: cardiovascular, handoff, time off" autocomplete="off">
             <button class="btn primary lg" type="submit">Search</button>
           </form>
           <div class="chips" aria-label="Common searches">
-            ${["ICU", "critical care", "handoff", "formulary", "3 North", "time off", "productivity"].map((t) => `<button type="button" class="chip" data-q="${t}">${t}</button>`).join("")}
+            ${["cardiovascular", "behavioral health", "handoff", "3 North", "time off"].map((t) => `<button type="button" class="chip" data-q="${t}">${t}</button>`).join("")}
           </div>
         </section>
 
@@ -673,7 +638,7 @@ function startApp(C) {
         </section>
       </div>
     </div>
-    ${buildNotes([
+    ${buildNotes("home", [
       ["Featured tiles", "Hero web part, Tiles layout (5 items)", "Upload any image per tile (organization-approved). SharePoint adds the dark overlay behind tile text. Add alt text to each image."],
       ["Search box + chips", "Header search (Microsoft Search) scoped to this site; chips are Quick links (Button layout) to saved searches", "Nothing to set up; site search works out of the box. The chips are just Quick links whose URLs are saved searches (copy the address after searching)."],
       ["Covering a unit today?", "Quick links web part (Tiles) pointing to each unit's page, or a List web part on the Units list", "One site page per unit, copied from a page template (+ New > Page > Templates)."],
@@ -726,9 +691,9 @@ function startApp(C) {
         </table>
       </section>
     </div>
-    ${buildNotes([
+    ${buildNotes("guidelines", [
       ["Guideline library table", "Document library + Document library web part", "Add columns with + Add column: Specialty (Choice), Status (Choice), Units (Choice, multiple), Revised (Date), Quick review (Hyperlink). Library settings > Versioning: turn on Require content approval and major versions so readers only see approved versions. Turn on major versions and Content approval so readers only see approved majors."],
-      ["Status pills", "Choice column with colored choices", "Column settings > Edit > choose a color for each choice (Approved green, In revision yellow, Due for review red). The text always shows, so color isn't the only cue."],
+      ["Status pills", "Choice column shown as Choice pills", "Status column header > Column settings > Format this column > Choice pills > Edit styles (Approved green, In revision yellow, Due for review red). The text always shows, so color isn't the only cue."],
       ["Filters", "Filters pane on the library view, plus a Keyword search box in the library", "Point the Practice guidelines nav link at the library itself: it has a search box and the Filters pane (open it with the filter icon; Specialty and Status show up automatically). The filter row in this demo stands in for that pane."],
       ["Download approved version", "File action: Download (major version)", "Readers without Edit rights see only the latest approved major version."],
       ["Reference documents", "Second document library ('Reference') in a Document library web part", "Formulary, KDOQI, career ladder policy and checklist."],
@@ -806,8 +771,8 @@ function startApp(C) {
         <section class="wp"><h2 style="font-size:16px">Something wrong?</h2><p style="margin:0 0 8px;font-size:14px">Report a mismatch between this summary and the approved document.</p><a class="btn" href="#" data-demo="Demo: opens a Microsoft Forms survey that logs to the 'Guideline feedback' list.">${ico("flag")} Report an issue</a></section>
       </aside>
     </div>
-    ${buildNotes([
-      ["Whole page", "Site page made from a page template", "Build one quick review page, then Save as template (bottom of the Publish menu). New guideline pages start from it."],
+    ${buildNotes("quick", [
+      ["Whole page", "Site page made from a page template", "Build one quick review page, then use the down arrow next to Save and close > Save as template. New pages start from + New > Page > Saved on this site."],
       ["Revision / info banners", "One-column section with a section background color", "Edit section > Section background. Put a Text web part in it."],
       ["At a glance cards", "Three-column section, soft section background, a Text web part in each column", "Heading 3 for the label, paragraph for the value. Keep numbers identical to the approved document."],
       ["Details accordions", "Collapsible sections (built into modern pages)", "Edit section > turn on Collapsible section. Set which ones start expanded."],
@@ -846,13 +811,13 @@ function startApp(C) {
         <h2 id="h-pb" class="sr-only">Playbook pages</h2>
         <form class="bigsearch" role="search" aria-label="Playbook search" onsubmit="return false">
           <label for="pbq" class="sr-only">Search the playbook</label>
-          <input id="pbq" type="search" placeholder="Search the playbook: handoff, ICU, formulary..." autocomplete="off">
+          <input id="pbq" type="search" placeholder="Search the playbook: handoff, class, unit..." autocomplete="off">
         </form>
         <p class="resultcount" id="pbcount" aria-live="polite"></p>
         <div id="pblist"></div>
       </section>
     </div>
-    ${buildNotes([
+    ${buildNotes("playbook", [
       ["Each playbook entry", "A site page (not a Word doc), made from a saved page template", "In the Pages library, + Add column: Category (Choice), Units (Choice, multiple), Tags (Choice, multiple, allow fill-in), Related guideline (Lookup), Owner (Person), Last reviewed (Date)."],
       ["Search box + filters", "The Site Pages library view itself", "Point the RD Playbook nav link at a Pages library view named Playbook (filter Category is not empty). That view has a search box and the Filters pane with Category and Units checkboxes, like this demo."],
       ["Topic / Unit filters", "Filters pane", "Shows Choice columns automatically. No setup."],
@@ -909,7 +874,7 @@ function startApp(C) {
         <section class="wp"><h2 style="font-size:16px">Was this helpful?</h2><div class="btnrow"><a class="btn" href="#" data-demo="Demo: page Like (built into SharePoint pages).">Yes</a><a class="btn" href="#" data-demo="Demo: opens a comment box (page comments are built in).">Suggest an edit</a></div></section>
       </aside>
     </div>
-    ${buildNotes([
+    ${buildNotes("article", [
       ["Steps", "Text web part, numbered list", "Keep each step to one action."],
       ["Page properties panel", "Page properties web part", "Shows Category, Units, Tags, Last reviewed."],
       ["Related guidelines", "Quick links (List layout) or Highlighted content by Related guideline", ""],
@@ -928,7 +893,7 @@ function startApp(C) {
         <tbody>${UNITS.map((u) => `<tr><th scope="row" style="font-weight:400"><a href="#/units/${encodeURIComponent(u.code)}"><strong>${esc(u.code)}</strong></a><br><span class="small muted">${esc(u.name)}</span></th><td>${esc(u.type)}</td><td>${esc(u.huddle)}</td><td>${esc(u.phone)} <span class="pill sample">Sample</span></td><td>${u.guidelines.map((g) => G[g] ? `<a href="#/guidelines/${g}">${esc(G[g].title)}</a>` : "").join(", ")}</td></tr>`).join("")}</tbody>
       </table>
     </section>
-    ${buildNotes([["Units table", "SharePoint list 'Units' + List web part", "Make it with + New > List. Columns: Unit code, Name, Type (Choice), Huddle (Text), Charge RN phone (Text), Go-to guidelines (Lookup, multiple), Notes. Phone numbers should come from the hospital directory."]])}`;
+    ${buildNotes("units", [["Units table", "SharePoint list 'Units' + List web part", "Make it with + New > List. Columns: Unit code, Name, Type (Choice), Huddle (Text), Charge RN phone (Text), Go-to guidelines (Lookup, multiple), Notes. Phone numbers should come from the hospital directory."]])}`;
   }
   function unitPage(code) {
     const u = U[code];
@@ -942,11 +907,11 @@ function startApp(C) {
       <section class="wp"><h2>Go-to guidelines</h2>
         ${u.guidelines.map((g) => G[g] ? `<div style="padding:8px 0;border-bottom:1px solid var(--neutralLighter)"><a href="#/guidelines/${g}"><strong>${esc(G[g].title)}</strong></a> ${pill(G[g].status)}<br>${G[g].glance ? `<span class="small muted">${esc(G[g].glance[0].label)}: ${esc(G[g].glance[0].value)}</span>` : `<span class="small muted">Approved document only</span>`}</div>` : "").join("")}</section>
       <section class="wp"><h2>Playbook for this unit</h2>
-        ${u.playbook.length ? `<ul style="padding-left:18px;margin:0">${u.playbook.map((p) => `<li style="margin:6px 0"><a href="#/playbook/${p}">${esc(P[p].title)}</a></li>`).join("")}</ul>` : `<p class="muted">No unit-specific pages yet.</p>`}
-        <p style="margin-bottom:0"><a href="#/playbook/covering-unfamiliar-unit">Covering a unit you don't usually work</a></p></section>
+        ${u.playbook.some((p) => P[p]) ? `<ul style="padding-left:18px;margin:0">${u.playbook.filter((p) => P[p]).map((p) => `<li style="margin:6px 0"><a href="#/playbook/${p}">${esc(P[p].title)}</a></li>`).join("")}</ul>` : `<p class="muted">No unit-specific pages yet.</p>`}
+        ${P["covering-unfamiliar-unit"] && !u.playbook.includes("covering-unfamiliar-unit") ? `<p style="margin-bottom:0"><a href="#/playbook/covering-unfamiliar-unit">${esc(P["covering-unfamiliar-unit"].title)}</a></p>` : ""}</section>
       <section class="wp"><h2>Contacts</h2><dl class="props"><dt>Charge RN</dt><dd>${esc(u.phone)}</dd><dt>Primary RD</dt><dd>Sample name</dd><dt>RD on call</dt><dd>See paging directory</dd></dl></section>
     </div>
-    ${buildNotes([["Whole page", "Site page from a 'Unit' page template", "Saved page template so every unit page matches."], ["Go-to guidelines", "Highlighted content web part, filtered by page property Units", ""], ["Contacts", "People web part (for named RDs) + Text", "People web part pulls names from Entra ID."]])}`;
+    ${buildNotes("unit", [["Whole page", "Site page from the saved Unit page template", "+ New > Page > Saved on this site, so every unit page matches."], ["Go-to guidelines", "Highlighted content web part, filtered by page property Units", ""], ["Contacts", "People web part (for named RDs) + Text", "People web part pulls names from Entra ID."]])}`;
   }
 
   function operations() {
@@ -956,12 +921,12 @@ function startApp(C) {
     <h1 class="pagetitle">Operations: SOPs and forms</h1>
     <p class="pagemeta"><span>Non-clinical how-tos. Most steps here are sample placeholders until department owners fill them in.</span></p>
     <section class="wp"><h2>Most used</h2>
-      <div class="qlinks four">${["time-off", "productivity", "holiday", "career-ladder"].map((id) => `<a class="ql" href="#/operations/${id}"><span class="ic">${ico(S[id].icon, 18)}</span><span><span class="lt">${esc(S[id].title)}</span><br><span class="ls">${esc(S[id].category)}</span></span></a>`).join("")}</div>
+      <div class="qlinks four">${SOPS.slice(0, 4).map((x) => x.id).map((id) => `<a class="ql" href="#/operations/${id}"><span class="ic">${ico(S[id].icon, 18)}</span><span><span class="lt">${esc(S[id].title)}</span><br><span class="ls">${esc(S[id].category)}</span></span></a>`).join("")}</div>
     </section>
     <div class="section cols-1-1-1">
       ${cats.map((c) => `<section class="wp"><h2>${esc(c)}</h2><ul style="list-style:none;padding:0;margin:0">${SOPS.filter((s) => s.category === c).map((s) => `<li style="padding:8px 0;border-bottom:1px solid var(--neutralLighter)"><a href="#/operations/${s.id}"><strong>${esc(s.title)}</strong></a>${s.sample ? ' <span class="pill sample">Sample</span>' : ""}<br><span class="small muted">${esc(s.summary)}</span></li>`).join("")}</ul></section>`).join("")}
     </div>
-    ${buildNotes([["Most used", "Quick links web part, Button layout", ""], ["SOP groups", "Highlighted content per category (Site Pages where Category = SOP group)", "Or one List web part over a 'SOPs' list with links."], ["Forms", "Microsoft Forms or Power Apps list forms", "Time off itself stays in the official scheduling system; link out, don't rebuild it."]])}`;
+    ${buildNotes("operations", [["Most used", "Quick links web part, Button layout", ""], ["SOP groups", "Highlighted content per category (Site Pages where Category = SOP group)", "Or one List web part over a 'SOPs' list with links."], ["Forms", "Microsoft Forms or Power Apps list forms", "Time off itself stays in the official scheduling system; link out, don't rebuild it."]])}`;
   }
   function sopPage(id) {
     const s = S[id];
@@ -974,7 +939,8 @@ function startApp(C) {
       <article class="wp"><p style="font-size:16px;margin-top:0">${esc(s.summary)}</p><h2>Steps</h2><ol class="steps">${s.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></article>
       <aside class="side">${s.links.length ? `<section class="wp"><h2 style="font-size:16px">Links and forms</h2><ul style="padding-left:18px;margin:0">${s.links.map((l) => `<li style="margin:6px 0"><a href="#" data-demo="Demo: '${esc(l)}' would open here.">${esc(l)}</a></li>`).join("")}</ul></section>` : ""}
         <section class="wp"><h2 style="font-size:16px">Questions?</h2><p style="margin:0;font-size:14px">Ask in the team channel or contact the page owner.</p></section></aside>
-    </div>`;
+    </div>
+    ${buildNotes("sop", [["Steps", "Text web part, numbered list", "One action per step."], ["Links and forms", "Quick links web part, List layout", "Link to the official systems."], ["Page properties", "Page details: Page type = SOP, Category", "Lets the Operations page group it automatically."]])}`;
   }
 
   /* ---------- site-wide search (Microsoft Search stand-in) ---------- */
@@ -1007,7 +973,7 @@ function startApp(C) {
       </div>
       <aside class="wp emph-soft"><h2 style="font-size:16px">Search tips</h2><ul style="padding-left:18px;margin:0;font-size:14px"><li>Search finds words inside quick reviews, playbook pages and SOPs.</li><li style="margin-top:6px">Unit codes work: "${esc((UNITS[0] || {}).code || "")}".</li><li style="margin-top:6px">In SharePoint, results also include text inside the approved documents.</li></ul></aside>
     </div>
-    ${buildNotes([["Search results", "Microsoft Search (built in), scoped to this site", "Nothing to set up. Text inside Word and PDF files is searchable automatically."]])}`;
+    ${buildNotes("search", [["Search results", "Microsoft Search (built in), scoped to this site", "Nothing to set up. Text inside Word and PDF files is searchable automatically."]])}`;
   }
 
   function notFound() {
