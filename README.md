@@ -2,7 +2,7 @@
 
 A clickable mockup of a SharePoint communication site for a hospital dietitian team, built so people can practice getting around before the real site exists.
 
-**WNA Hospital is fictional.** Every guideline here is blank and for display purposes only. Nothing on this site is medical guidance.
+Unit numbers are real; **every guideline is blank and for display purposes only.** Nothing on this site is medical guidance. Hatched buttons are display only.
 
 - Live demo: https://kleynhoyz.github.io/rd-sharepoint-demo/
 - Desktop layout only.
