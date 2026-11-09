@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<meta name="robots" content="noindex, nofollow">
+<title>Clinical Nutrition</title>
+<style>
+/* Theme tokens = a SharePoint site theme (Settings > Change the look > Theme).
+   The internal build approximates the hospital's brand colors; the public demo
+   swaps in SharePoint's built-in Blue theme. Text colors pass WCAG AA on white. */
+:root{
+  --themePrimary:#00609C;      /* AA on white 6.6:1 */
+  --themeDark:#004872;
+  --themeDarker:#00375A;
+  --themeLighter:#D6EAF6;
+  --themeLighterAlt:#F2F8FC;
+  --brandBlue:#489DD1;         /* decorative only */
+  --brandGreen:#82C670;        /* decorative only */
+  --greenText:#2D6A1F;         /* AA on white */
+  --greenBg:#EAF5E5;
+  --amberText:#7A4B00; --amberBg:#FFF4CE;
+  --redText:#A4262C; --redBg:#FDE7E9;
+  --neutralPrimary:#323130; --neutralSecondary:#605E5C; --neutralTertiary:#8A8886;
+  --neutralLight:#EDEBE9; --neutralLighter:#F3F2F1; --neutralLighterAlt:#FAF9F8;
+  --white:#fff;
+  --focus:#000;
+}
+*{box-sizing:border-box}
+html{font-size:14px}
+body{margin:0;min-width:1280px;font-family:"Segoe UI","Segoe UI Web (West European)",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;color:var(--neutralPrimary);background:var(--neutralLighterAlt);line-height:1.45}
+a{color:var(--themePrimary)}
+a:hover{color:var(--themeDarker)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;box-shadow:0 0 0 4px #fff}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:8px;top:-60px;background:#fff;color:var(--themeDarker);padding:10px 16px;z-index:100;font-weight:600;border:2px solid var(--themeDarker)}
+.skip:focus{top:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Demo banner */
+.demo{background:var(--amberBg);color:var(--amberText);font-size:12px;padding:6px 20px;border-bottom:1px solid #F1D88A;display:flex;gap:12px;align-items:center}
+.demo strong{font-weight:600}
+
+/* Suite bar (Microsoft 365 header, tinted by theme) */
+.suite{height:48px;background:var(--themeDarker);color:#fff;display:flex;align-items:center;padding:0 8px 0 0}
+.waffle{width:48px;height:48px;display:grid;place-items:center;background:transparent;border:0;color:#fff;cursor:pointer}
+.waffle:hover{background:rgba(255,255,255,.12)}
+.suite .app{font-weight:600;font-size:16px;padding:0 12px}
+.suite .search{margin:0 auto;width:468px;position:relative}
+.suite .search input{width:100%;height:32px;border-radius:4px;border:0;padding:0 12px 0 36px;font:inherit;background:#fff;color:var(--neutralPrimary)}
+.suite .search svg{position:absolute;left:10px;top:8px;color:var(--themePrimary)}
+.suite .me{display:flex;align-items:center;gap:4px}
+.iconbtn{width:40px;height:40px;display:grid;place-items:center;border:0;background:transparent;color:inherit;cursor:pointer;border-radius:2px}
+.iconbtn:hover{background:rgba(255,255,255,.12)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--brandGreen);color:#123;display:grid;place-items:center;font-weight:600;font-size:12px;margin:0 8px}
+
+/* Site header */
+.siteheader{background:#fff;border-bottom:1px solid var(--neutralLight)}
+.siteheader .row{display:flex;align-items:center;gap:16px;padding:16px 32px 8px;max-width:1440px;margin:0 auto}
+.logo{width:56px;height:56px;border-radius:4px;background:linear-gradient(135deg,var(--brandBlue) 0 55%,var(--brandGreen) 55%);display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.sitetitle{font-size:24px;font-weight:600;margin:0;color:var(--neutralPrimary)}
+.sitesub{color:var(--neutralSecondary);font-size:13px}
+.headactions{margin-left:auto;display:flex;gap:8px;color:var(--neutralSecondary);font-size:13px}
+.headactions button{background:none;border:0;color:var(--neutralPrimary);font:inherit;padding:6px 8px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.headactions button:hover{background:var(--neutralLighter)}
+nav.topnav{max-width:1440px;margin:0 auto;padding:0 24px}
+nav.topnav ul{list-style:none;margin:0;padding:0;display:flex}
+nav.topnav a{display:block;padding:12px 12px 10px;text-decoration:none;color:var(--neutralPrimary);border-bottom:2px solid transparent;font-size:14px}
+nav.topnav a:hover{background:var(--neutralLighter)}
+nav.topnav a[aria-current="page"]{border-bottom-color:var(--themePrimary);font-weight:600}
+
+/* Command bar */
+.cmdbar{background:#fff;border-bottom:1px solid var(--neutralLight)}
+.cmdbar .in{max-width:1440px;margin:0 auto;padding:4px 24px;display:flex;align-items:center;gap:4px;font-size:13px}
+.cmdbar button{background:none;border:0;padding:6px 10px;font:inherit;color:var(--neutralPrimary);cursor:pointer;display:flex;gap:6px;align-items:center}
+.cmdbar button:hover{background:var(--neutralLighter)}
+.cmdbar .right{margin-left:auto;color:var(--neutralSecondary)}
+
+main{display:block}
+.page{max-width:1440px;margin:0 auto;padding:0 24px 48px}
+.crumbs{font-size:13px;padding:16px 8px 0;color:var(--neutralSecondary)}
+.crumbs ol{list-style:none;margin:0;padding:0;display:flex;gap:6px}
+.crumbs li+li::before{content:"›";margin-right:6px}
+.crumbs a{color:var(--neutralSecondary)}
+h1.pagetitle{font-size:32px;font-weight:600;margin:12px 8px 4px}
+.pagemeta{color:var(--neutralSecondary);font-size:13px;margin:0 8px 16px;display:flex;gap:16px;flex-wrap:wrap}
+
+/* Section / column layout (SharePoint canvas sections) */
+.section{display:grid;gap:24px;margin-top:24px}
+.cols-2-1{grid-template-columns:2fr 1fr}
+.cols-1-2{grid-template-columns:1fr 2fr}
+.cols-1-1-1{grid-template-columns:repeat(3,1fr)}
+.cols-1-3{grid-template-columns:280px 1fr}
+.wp{background:#fff;padding:20px 24px;border-radius:2px;box-shadow:0 1.6px 3.6px rgba(0,0,0,.08),0 .3px .9px rgba(0,0,0,.06)}
+.wp.flat{box-shadow:none;background:transparent;padding:0}
+.wp h2{font-size:20px;font-weight:600;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.wp h2 .seeall{margin-left:auto;font-size:13px;font-weight:400}
+.wp h3{font-size:16px;font-weight:600;margin:16px 0 8px}
+.emph-soft{background:var(--themeLighterAlt)}
+.emph-strong{background:var(--themePrimary);color:#fff}
+.emph-strong a{color:#fff}
+
+/* Hero web part (tiles) */
+.hero{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:180px 180px;gap:8px;margin-top:24px}
+.tile{position:relative;overflow:hidden;border-radius:2px;color:#fff;text-decoration:none;display:flex;align-items:flex-end;padding:20px;background:var(--themeDarker)}
+.tile:hover{color:#fff}
+.tile:hover .tbg{transform:scale(1.03)}
+.tile .tbg{position:absolute;inset:0;transition:transform .3s}
+.tile .tbody{position:relative}
+.tile .k,.tile .t,.tile .d{display:block}
+.tile .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;opacity:.95}
+.tile .t{font-size:20px;font-weight:600;line-height:1.2;margin-top:4px}
+.tile .d{font-size:13px;opacity:.95;margin-top:6px;max-width:440px}
+.tile.big{grid-row:span 2}
+.tile.big .t{font-size:30px}
+.scrim{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,30,50,.82),rgba(0,30,50,.15) 70%)}
+
+/* Search box web part */
+.bigsearch{display:flex;gap:8px;align-items:center}
+.bigsearch input{flex:1;height:44px;font:inherit;font-size:16px;padding:0 14px;border:1px solid var(--neutralTertiary);border-radius:2px}
+.bigsearch input:focus{border-color:var(--themePrimary);outline:2px solid var(--themePrimary);outline-offset:0}
+.btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 16px;border-radius:2px;border:1px solid var(--neutralTertiary);background:#fff;color:var(--neutralPrimary);font:inherit;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--neutralLighter);color:var(--neutralPrimary)}
+.btn.primary{background:var(--themePrimary);border-color:var(--themePrimary);color:#fff}
+.btn.primary:hover{background:var(--themeDark);color:#fff}
+.btn.lg{height:44px;padding:0 20px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{border:1px solid var(--neutralLight);background:var(--neutralLighter);border-radius:16px;padding:3px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--neutralPrimary)}
+.chip:hover{background:var(--themeLighter)}
+.chip[aria-pressed="true"]{background:var(--themePrimary);border-color:var(--themePrimary);color:#fff}
+
+/* Quick links (compact / button layout) */
+.qlinks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.qlinks.four{grid-template-columns:repeat(4,1fr)}
+.ql{display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--neutralLight);border-radius:2px;text-decoration:none;color:var(--neutralPrimary);background:#fff}
+.ql:hover{border-color:var(--themePrimary);background:var(--themeLighterAlt);color:var(--neutralPrimary)}
+.ql .ic{width:32px;height:32px;flex:none;border-radius:4px;background:var(--themeLighter);color:var(--themeDarker);display:grid;place-items:center}
+.ql .lt{font-weight:600;font-size:14px}
+.ql .ls{font-size:12px;color:var(--neutralSecondary)}
+
+/* Units grid */
+.unitgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.unitcard{display:block;text-decoration:none;color:var(--neutralPrimary);border:1px solid var(--neutralLight);padding:10px 12px;background:#fff}
+.unitcard:hover{background:var(--themeLighterAlt);color:var(--neutralPrimary)}
+.unitcard .uc{font-weight:700;font-size:16px}
+.unitcard .un{font-size:12px;color:var(--neutralSecondary)}
+
+/* News */
+.news{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.newsitem{display:flex;gap:12px;text-decoration:none;color:var(--neutralPrimary)}
+.newsitem:hover .nt{text-decoration:underline}
+.nthumb{width:120px;height:84px;flex:none;border-radius:2px}
+.ntag{font-size:12px;color:var(--themePrimary);font-weight:600}
+.nt{font-weight:600;font-size:15px;line-height:1.25;margin:2px 0}
+.nb{font-size:13px;color:var(--neutralSecondary)}
+.nd{font-size:12px;color:var(--neutralSecondary);margin-top:4px}
+
+/* Events */
+.events{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.events li{display:flex;gap:12px;align-items:flex-start}
+.dbox{width:52px;flex:none;text-align:center;border:1px solid var(--neutralLight);border-top:4px solid var(--themePrimary);padding:2px 0 4px;background:#fff}
+.dbox .m{font-size:11px;font-weight:600;color:var(--themePrimary)}
+.dbox .dd{font-size:20px;font-weight:600;line-height:1}
+.et{font-weight:600;font-size:14px}
+.etime{font-size:12px;color:var(--neutralSecondary)}
+
+/* Document library (list web part) */
+.listbar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.listbar .filter{height:32px;border:1px solid var(--neutralTertiary);border-radius:2px;padding:0 10px;font:inherit;min-width:260px}
+.listbar select{height:32px;border:1px solid var(--neutralTertiary);border-radius:2px;font:inherit;padding:0 8px;background:#fff}
+.listbar label{font-size:13px;color:var(--neutralSecondary)}
+table.list{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
+table.list caption{text-align:left;font-size:13px;color:var(--neutralSecondary);padding:4px 0 8px}
+table.list th{text-align:left;font-weight:600;font-size:13px;color:var(--neutralSecondary);padding:10px 12px;border-bottom:1px solid var(--neutralLight);white-space:nowrap}
+table.list td{padding:10px 12px;border-bottom:1px solid var(--neutralLighter);vertical-align:middle}
+table.list tbody tr:hover{background:var(--neutralLighter)}
+table.list .grp td{background:var(--neutralLighterAlt);font-weight:600;color:var(--neutralPrimary);padding:8px 12px}
+.fname{display:flex;gap:10px;align-items:center}
+.ficon{width:30px;height:26px;flex:none;border-radius:2px;color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center}
+.ficon.docx{background:#185ABD}.ficon.pdf{background:#B30B00}.ficon.doc{background:#185ABD}.ficon.page{background:var(--themePrimary)}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;white-space:nowrap}
+.pill.ok{background:var(--greenBg);color:var(--greenText)}
+.pill.rev{background:var(--amberBg);color:var(--amberText)}
+.pill.due{background:var(--redBg);color:var(--redText)}
+.pill.draft{background:var(--neutralLighter);color:var(--neutralPrimary);border:1px dashed var(--neutralTertiary)}
+.pill.sample{background:#fff;color:var(--neutralSecondary);border:1px solid var(--neutralLight);font-weight:400}
+.rowact{display:flex;gap:6px}
+.linkbtn{background:none;border:0;color:var(--themePrimary);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+.muted{color:var(--neutralSecondary)}
+.small{font-size:12px}
+
+/* Quick review page */
+.glance{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.gcard{padding:14px 16px;background:var(--themeLighterAlt)}
+.gcard .gl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--neutralSecondary)}
+.gcard .gv{font-size:17px;font-weight:600;margin:4px 0;color:var(--themeDarker)}
+.gcard .gs{font-size:13px;color:var(--neutralSecondary)}
+.callout{background:var(--greenBg);padding:12px 16px;margin:12px 0;font-size:14px}
+.callout.warn{background:var(--amberBg);color:var(--amberText)}
+.callout.info{background:var(--themeLighterAlt)}
+.collapse{border-top:1px solid var(--neutralLight)}
+.collapse:last-child{border-bottom:1px solid var(--neutralLight)}
+.collapse h3{margin:0}
+.collapse button.ch{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;padding:14px 4px;font:inherit;font-size:16px;font-weight:600;color:var(--neutralPrimary);cursor:pointer;text-align:left}
+.collapse button.ch:hover{background:var(--neutralLighter)}
+.collapse button.ch svg{transition:transform .15s;flex:none}
+.collapse button.ch[aria-expanded="true"] svg{transform:rotate(90deg)}
+.collapse .cb{padding:0 4px 16px 30px}
+.collapse .cb ul{margin:0;padding-left:18px}
+.collapse .cb li{margin:4px 0}
+table.data{border-collapse:collapse;font-size:13px;width:100%;margin-top:4px}
+table.data th,table.data td{border:1px solid var(--neutralLight);padding:6px 10px;text-align:left;vertical-align:top}
+table.data th{background:var(--neutralLighter);font-weight:600}
+.side .wp+.wp{margin-top:16px}
+dl.props{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px}
+dl.props dt{color:var(--neutralSecondary)}
+dl.props dd{margin:0;font-weight:600}
+ol.refs{padding-left:18px;font-size:13px;margin:0}
+ol.refs li{margin:6px 0}
+.jump{list-style:none;padding:0;margin:0;font-size:14px}
+.jump li a{display:block;padding:5px 8px;border-left:2px solid var(--neutralLight);text-decoration:none;color:var(--neutralPrimary)}
+.jump li a:hover{border-left-color:var(--themePrimary);background:var(--themeLighterAlt)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Playbook */
+.filterpane fieldset{border:0;padding:0;margin:0 0 16px}
+.filterpane legend{font-weight:600;font-size:14px;margin-bottom:6px;padding:0}
+.filterpane label{display:flex;gap:8px;align-items:center;padding:3px 0;font-size:14px;cursor:pointer}
+.filterpane input[type=checkbox]{width:16px;height:16px;accent-color:var(--themePrimary)}
+.pbitem{display:block;padding:14px 4px;border-bottom:1px solid var(--neutralLight);text-decoration:none;color:var(--neutralPrimary)}
+.pbitem:hover{background:var(--themeLighterAlt);color:var(--neutralPrimary)}
+.pbitem .pt{font-weight:600;font-size:16px;color:var(--themePrimary)}
+.pbitem:hover .pt{text-decoration:underline}
+.pbitem .ps{font-size:14px;margin:2px 0 6px}
+.pbmeta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--neutralSecondary)}
+.tag{background:var(--neutralLighter);border-radius:2px;padding:1px 6px;font-size:12px;color:var(--neutralPrimary)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+ol.steps li{counter-increment:s;position:relative;padding:10px 0 10px 44px;border-bottom:1px solid var(--neutralLighter);font-size:15px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:8px;width:28px;height:28px;border-radius:50%;background:var(--themePrimary);color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px}
+.resultcount{font-size:13px;color:var(--neutralSecondary);margin:4px 0 8px}
+
+/* Search results */
+.sgroup h2{font-size:18px}
+.sres{padding:10px 0;border-bottom:1px solid var(--neutralLighter)}
+.sres a{font-size:16px;font-weight:600}
+.sres .sp{font-size:13px;color:var(--neutralSecondary)}
+mark{background:#FFF100;color:inherit;padding:0 1px}
+
+/* Build notes (author-only panel) */
+.buildnotes{margin-top:32px;border:1px dashed var(--neutralTertiary);background:#fff;padding:0}
+.buildnotes>button{width:100%;text-align:left;background:none;border:0;padding:12px 16px;font:inherit;font-weight:600;cursor:pointer;display:flex;gap:8px;align-items:center;color:var(--neutralPrimary)}
+.buildnotes .bn{padding:0 16px 16px;font-size:13px}
+.buildnotes table{border-collapse:collapse;width:100%}
+.buildnotes th,.buildnotes td{border:1px solid var(--neutralLight);padding:6px 8px;text-align:left;vertical-align:top}
+.buildnotes th{background:var(--neutralLighter)}
+
+/* Footer */
+footer.sitefoot{background:var(--themeDarker);color:#fff;margin-top:40px}
+footer.sitefoot .in{max-width:1440px;margin:0 auto;padding:24px 32px;display:flex;gap:48px;font-size:13px}
+footer.sitefoot a{color:#fff}
+footer.sitefoot h2{font-size:14px;margin:0 0 8px}
+footer.sitefoot ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+
+/* Toast (stands in for SharePoint file preview / actions in the demo) */
+.toast{position:fixed;right:24px;bottom:24px;max-width:420px;background:var(--neutralPrimary);color:#fff;padding:14px 16px;border-radius:2px;box-shadow:0 6px 18px rgba(0,0,0,.25);font-size:14px;display:none;z-index:50}
+.toast.show{display:block}
+.toast button{margin-left:12px;background:none;border:1px solid #fff;color:#fff;font:inherit;padding:2px 8px;cursor:pointer}
+
+/* Print: quick review prints cleanly (SharePoint pages print from browser) */
+@media print{
+  .demo,.suite,.siteheader,.cmdbar,footer,.side,.buildnotes,.crumbs,.toast{display:none!important}
+  body{min-width:0;background:#fff}
+  .wp{box-shadow:none}
+  .collapse .cb[hidden]{display:block!important}
+}
+
+[tabindex="-1"]:focus{outline:none;box-shadow:none}
+.emph-soft a,.gcard a,.callout a{color:var(--themeDark)}
+
+:root{--themePrimary:#0078D4;--themeDark:#005A9E;--themeDarker:#004578;--themeLighter:#DEECF9;--themeLighterAlt:#EFF6FC;--brandBlue:#2B88D8;--brandGreen:#00B7C3}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#content" id="skiplink">Skip to main content</a>
+<aside class="demo" aria-label="Demo notice"><strong>Public practice demo.</strong> WNA Hospital is fictional. Every guideline here is blank and for display purposes only. Nothing on this site is medical guidance.</aside>
+
+<header>
+  <div class="suite">
+    <button class="waffle" type="button" aria-label="App launcher" data-demo="Demo: Microsoft 365 app launcher."><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16"><g fill="currentColor"><circle cx="3" cy="3" r="1.3"/><circle cx="8" cy="3" r="1.3"/><circle cx="13" cy="3" r="1.3"/><circle cx="3" cy="8" r="1.3"/><circle cx="8" cy="8" r="1.3"/><circle cx="13" cy="8" r="1.3"/><circle cx="3" cy="13" r="1.3"/><circle cx="8" cy="13" r="1.3"/><circle cx="13" cy="13" r="1.3"/></g></svg></button>
+    <span class="app">SharePoint</span>
+    <form class="search" role="search" id="suitesearch" aria-label="Site search">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+      <label for="suiteq" class="sr-only">Search this site</label>
+      <input id="suiteq" type="search" placeholder="Search this site" autocomplete="off">
+    </form>
+    <div class="me">
+      <button class="iconbtn" type="button" aria-label="Notifications" data-demo="Demo: Microsoft 365 notifications."><svg aria-hidden="true" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 11V7a4 4 0 018 0v4l1.5 2h-11zM6.5 13.5a1.5 1.5 0 003 0"/></svg></button>
+
+      <span class="avatar" aria-label="Signed in as a demo user" role="img">RD</span>
+    </div>
+  </div>
+  <div class="siteheader">
+    <div class="row">
+      <div class="logo" aria-hidden="true">CN</div>
+      <div>
+        <p class="sitetitle">Clinical Nutrition</p>
+        <div class="sitesub">WNA Hospital · RD team site (fictional practice demo)</div>
+      </div>
+      <div class="headactions">
+        <button type="button" data-demo="Demo: Follow adds this site to your SharePoint start page."><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 1.5l2 4.2 4.5.6-3.3 3.1.8 4.5L8 11.7 4 13.9l.8-4.5L1.5 6.3 6 5.7z"/></svg>Follow</button>
+        <button type="button" data-demo="Demo: Share opens the standard SharePoint share dialog."><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="3.5" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="12" cy="12.5" r="2"/><path d="M6 7l4-2.5M6 9l4 2.5"/></svg>Share</button>
+      </div>
+    </div>
+    <nav class="topnav" aria-label="Site">
+      <ul>
+        <li><a href="#/home" data-sec="home">Home</a></li>
+        <li><a href="#/units" data-sec="units">Units</a></li>
+        <li><a href="#/guidelines" data-sec="guidelines">Practice guidelines</a></li>
+        <li><a href="#/playbook" data-sec="playbook">RD Playbook</a></li>
+        <li><a href="#/operations" data-sec="operations">Operations</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="cmdbar"><div class="in">
+    <button type="button" data-demo="Demo: + New (page, news post, list, library). Visible to site members with edit rights.">+ New</button>
+    <button type="button" data-demo="Demo: Page details panel.">Page details</button>
+    <button type="button" data-demo="Demo: Analytics shows page views (site owners).">Analytics</button>
+    <span class="right">Published · read-only view</span>
+  </div></div>
+</header>
+
+<main id="content" tabindex="-1"><div class="page" id="page"></div></main>
+<div id="routeannounce" class="sr-only" aria-live="polite"></div>
+
+<footer class="sitefoot">
+  <div class="in">
+    <div><h2>Clinical Nutrition</h2><p style="margin:0;max-width:360px">WNA Hospital is a fictional hospital. This practice site shows layout and navigation only. No clinical content.</p></div>
+    <div><h2>Site</h2><ul><li><a href="#/guidelines">Practice guidelines</a></li><li><a href="#/playbook">RD Playbook</a></li><li><a href="#/operations">Operations</a></li></ul></div>
+    <div><h2>Help</h2><ul><li><a href="#" data-demo="Demo: Microsoft Forms feedback survey.">Site feedback</a></li></ul></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastmsg"></span><button type="button" id="toastclose">Close</button></div>
+
+<script>
+/* =========================================================================
+   PUBLIC PRACTICE DEMO CONTENT - fictional "WNA Hospital".
+   No clinical content. Every guideline is a blank placeholder so people can
+   practice getting around the site. Nothing here comes from a real hospital,
+   and nothing here is medical guidance.
+   ========================================================================= */
+
+const BLANK = "Blank guideline for display purposes only. No clinical content.";
+const PH = (n) => Array.from({ length: n }, (_, i) => i === 0 ? BLANK : "Placeholder line " + (i + 1) + ". A real guideline would put its content here.");
+const quickReview = (extra = {}) => Object.assign({
+  glance: [
+    { label: "Calories", value: "[Placeholder]", sub: "Blank guideline for display only" },
+    { label: "Protein", value: "[Placeholder]", sub: "Blank guideline for display only" },
+    { label: "Fluid", value: "[Placeholder]", sub: "Blank guideline for display only" }
+  ],
+  sections: [
+    { h: "Estimating needs", items: PH(3) },
+    { h: "Assessment", items: PH(3) },
+    { h: "Nutrition support", items: PH(2) },
+    { h: "Monitoring", items: PH(2) },
+    { h: "Example table", table: { head: ["Item", "Column A", "Column B"], rows: [["Row 1", "Placeholder", "Placeholder"], ["Row 2", "Placeholder", "Placeholder"], ["Row 3", "Placeholder", "Placeholder"]], note: "Tables in SharePoint are made in the Text web part. This one is empty on purpose." } }
+  ],
+  refs: ["Placeholder reference. A real guideline lists its sources here."]
+}, extra);
+
+const g = (id, title, specialty, revised, status, units, quick, extra = {}) => Object.assign({
+  id, title, specialty, year: revised.slice(-4), revised, status, units,
+  file: `WNA ${title} Guideline (blank sample).pdf`, keywords: "", sample: true
+}, quick ? quickReview(extra) : extra);
+
+const GUIDELINES = [
+  g("critical-care", "Critical Care", "Critical care", "10/2025", "Approved", ["ICU 5"], true),
+  g("refeeding", "Refeeding Syndrome", "Nutrition support", "10/2025", "Approved", ["All units"], true),
+  g("renal", "Renal", "Renal", "7/2025", "Approved", ["ICU 5", "4 East"], true),
+  g("parenteral", "Parenteral Nutrition", "Nutrition support", "3/2024", "Approved", ["All units"], true),
+  g("wound", "Wound Care", "Wound", "9/2024", "Approved", ["All units"], true),
+  g("diabetes", "Diabetes", "Endocrine", "7/2023", "Approved", ["All units"], true),
+  g("liver", "Liver Disease", "GI / Hepatology", "1/2025", "Approved", ["4 East", "ICU 5"], true),
+  g("behavioral-health", "Behavioral Health", "Behavioral health", "6/2021", "In revision", ["3 North"], true,
+    { nextVersion: "Revision due 01/2027 (sample)", revisionNote: "Sample banner. This is what a page looks like while its guideline is being revised. Readers keep using the approved version until the new one is published." }),
+  g("estimated-needs", "Estimated Needs Chart", "Estimated needs", "9/2025", "Approved", ["All units"], true),
+  g("cardiovascular", "Cardiovascular", "Cardiac", "2024", "Approved", ["CVICU 6"], false),
+  g("oncology", "Oncology", "Oncology", "2023", "Approved", ["7 West"], false),
+  g("older-adults", "Older Adults", "Geriatrics", "2024", "Approved", ["All units"], false),
+  g("pediatrics", "Pediatrics", "Pediatrics", "2024", "Approved", ["Peds 9"], false),
+  g("pregnancy", "Pregnancy", "Women's health", "2024", "Approved", ["2 South"], false),
+  g("spinal-cord", "Spinal Cord Injury", "Neuro / Rehab", "2025", "Approved", ["8 North"], false),
+  g("bariatrics", "Bariatrics", "Surgery", "2023", "Approved", ["4 East"], false),
+  g("copd", "COPD", "Pulmonary", "2023", "Approved", ["4 East"], false),
+  g("pancreatitis", "Pancreatitis", "GI / Hepatology", "2021", "Due for review", ["4 East", "ICU 5"], false),
+  g("eating-disorders", "Eating Disorders", "Behavioral health", "2025", "Approved", ["3 North"], false)
+];
+
+const REFERENCE_DOCS = [
+  { title: "WNA Nutrition Formulary (sample)", detail: "Blank sample document", file: "WNA Nutrition Formulary (sample).pdf" },
+  { title: "Diet order manual (sample)", detail: "Blank sample document", file: "Diet order manual (sample).pdf" },
+  { title: "Career ladder policy (sample)", detail: "Blank sample document", file: "Career ladder policy (sample).pdf" }
+];
+
+const PB = (id, title, category, units, tags, summary, steps, related, extra = {}) =>
+  Object.assign({ id, title, category, units, tags, updated: "Sample", owner: "Sample owner", sample: true, summary, steps, related }, extra);
+
+const PLAYBOOK = [
+  PB("covering-unfamiliar-unit", "Covering a unit you don't usually work", "Getting oriented", ["All units"], ["coverage", "orientation", "float"],
+    "A short checklist for the first hour on an unfamiliar unit (sample).",
+    ["Open the Units page and pick the unit you're covering.", "Note the huddle time and charge RN contact on the unit page.", "Open the quick review for each guideline the unit page lists.", "Check the Playbook pages linked from the unit page.", "Ask the unit's primary RD if anything is unclear."],
+    ["estimated-needs"]),
+  PB("bh-first-visit", "First visit on a behavioral health unit", "Behavioral health", ["3 North"], ["behavioral health", "assessment"],
+    "Sample page. Shows how a unit-specific playbook page is laid out.",
+    ["Placeholder step 1.", "Placeholder step 2.", "Placeholder step 3."], ["behavioral-health"]),
+  PB("draft-example", "Example of a draft page", "Behavioral health", ["3 North"], ["draft"],
+    "This page shows how a draft looks before it's approved. Drafts are hidden from readers in real SharePoint until published.",
+    ["Placeholder step 1.", "Placeholder step 2."], ["behavioral-health"], { draft: true }),
+  PB("note-conventions", "Note conventions for long-stay patients", "Documentation", ["3 North", "8 North"], ["documentation", "long stay"],
+    "Sample page about team documentation habits.",
+    ["Placeholder step 1.", "Placeholder step 2.", "Placeholder step 3."], ["behavioral-health"]),
+  PB("tube-feeding-setup", "Helping nursing set up tube feeding", "Nutrition support", ["All units"], ["tube feeding", "nursing"],
+    "Sample page. Clinical steps would live in the guideline, not here.",
+    ["Placeholder step 1.", "Placeholder step 2.", "See the linked guideline for clinical details (blank in this demo)."], ["refeeding", "parenteral"]),
+  PB("icu-starting-feeds", "Starting feeds in the ICU", "Nutrition support", ["ICU 5", "CVICU 6"], ["ICU", "enteral"],
+    "Sample page linking to a guideline instead of repeating its numbers.",
+    ["Placeholder step 1.", "Placeholder step 2.", "Open the Critical Care quick review (blank in this demo)."], ["critical-care"]),
+  PB("pn-recommendation", "Writing a parenteral nutrition recommendation", "Nutrition support", ["All units"], ["PN", "template", "pharmacy"],
+    "Sample page for a recommendation template.",
+    ["Placeholder step 1.", "Placeholder step 2.", "Placeholder step 3."], ["parenteral", "refeeding"]),
+  PB("ons-ordering", "Choosing an oral supplement", "Formulary", ["All units"], ["supplement", "formulary"],
+    "Sample page. Starts from the formulary in Reference documents.",
+    ["Open the WNA Nutrition Formulary (sample) under Reference documents.", "Placeholder step 2."], ["wound"]),
+  PB("weekend-handoff", "Weekend and holiday handoff", "Coverage", ["All units"], ["weekend", "holiday", "handoff"],
+    "What to leave for the weekend RD so nothing gets lost (sample).",
+    ["Add patients needing follow-up to the shared handoff list by Friday afternoon.", "Flag anyone on new nutrition support.", "Note pending labs and what you'd change based on them."], ["refeeding"]),
+  PB("risk-screen", "Quick risk screen", "Nutrition support", ["All units"], ["screen"],
+    "Sample page for a short screening checklist.",
+    ["Placeholder step 1.", "Placeholder step 2."], ["refeeding"])
+];
+
+const UNITS = [
+  { code: "3 North", name: "Behavioral Health", type: "Behavioral health", huddle: "9:00 (sample)", phone: "x0-0000", guidelines: ["behavioral-health", "eating-disorders", "refeeding"], notes: "Sample unit. Check in with the RN before visits.", playbook: ["bh-first-visit", "note-conventions", "draft-example"] },
+  { code: "4 East", name: "Medical / Surgical", type: "Med/Surg", huddle: "8:30 (sample)", phone: "x0-0000", guidelines: ["liver", "renal", "copd", "pancreatitis"], notes: "Sample unit.", playbook: ["ons-ordering"] },
+  { code: "ICU 5", name: "Medical / Surgical ICU", type: "Critical care", huddle: "8:00 (sample)", phone: "x0-0000", guidelines: ["critical-care", "refeeding", "parenteral", "renal"], notes: "Sample unit.", playbook: ["icu-starting-feeds", "pn-recommendation", "risk-screen"] },
+  { code: "CVICU 6", name: "Cardiovascular ICU", type: "Critical care", huddle: "8:15 (sample)", phone: "x0-0000", guidelines: ["cardiovascular", "critical-care"], notes: "Sample unit.", playbook: ["icu-starting-feeds"] },
+  { code: "7 West", name: "Oncology", type: "Oncology", huddle: "9:15 (sample)", phone: "x0-0000", guidelines: ["oncology", "parenteral"], notes: "Sample unit.", playbook: ["ons-ordering"] },
+  { code: "2 South", name: "Mother-Baby", type: "Women's health", huddle: "9:30 (sample)", phone: "x0-0000", guidelines: ["pregnancy", "diabetes"], notes: "Sample unit.", playbook: [] },
+  { code: "8 North", name: "Rehab", type: "Neuro / Rehab", huddle: "9:45 (sample)", phone: "x0-0000", guidelines: ["spinal-cord", "wound"], notes: "Sample unit.", playbook: ["note-conventions"] },
+  { code: "Peds 9", name: "Pediatrics", type: "Pediatrics", huddle: "8:45 (sample)", phone: "x0-0000", guidelines: ["pediatrics"], notes: "Sample unit.", playbook: [] }
+];
+
+const SOP = (id, title, category, icon, summary, steps, links = []) => ({ id, title, category, icon, summary, steps, links, updated: "Sample", sample: true });
+const SOPS = [
+  SOP("time-off", "Request time off", "Scheduling", "cal", "Sample steps for a time-off request.", ["Check the team calendar for coverage.", "Submit the request in the scheduling system (link goes here).", "Watch for manager approval."], ["Scheduling system (placeholder)"]),
+  SOP("productivity", "Submit monthly productivity", "Reporting", "chart", "Sample steps for monthly reporting.", ["Keep your daily log.", "Total the month's counts.", "Enter them on the reporting form (link goes here)."], ["Reporting form (placeholder)"]),
+  SOP("huddle", "Lead the daily huddle", "Daily operations", "people", "Sample steps for running huddle.", ["Pull the census and new consults.", "Flag high-priority patients.", "Assign coverage gaps."]),
+  SOP("holiday", "Weekend and holiday coverage", "Scheduling", "cal", "Sample coverage process.", ["Check the holiday rotation.", "Confirm your weekend role.", "Arrange swaps with a colleague, then tell your manager."]),
+  SOP("career-ladder", "Apply for career ladder advancement", "Career", "star", "Sample process. See the sample policy in Reference documents.", ["Read the policy.", "Work through the checklist.", "Submit by the deadline."], ["Career ladder policy (sample)"]),
+  SOP("formulary-issue", "Report a formulary or product issue", "Formulary", "box", "Sample reporting steps.", ["Note the product and what happened.", "Submit the form (Microsoft Forms placeholder)."], ["Product issue form (placeholder)"]),
+  SOP("precepting", "Precepting students and interns", "Education", "people", "Sample setup steps.", ["Confirm rotation dates.", "Request system access early.", "Share the Playbook as a starting point."]),
+  SOP("onboarding", "New RD onboarding checklist", "Education", "check", "Sample first-two-weeks checklist.", ["Get system access.", "Shadow on each unit type.", "Read the quick reviews (blank in this demo)."])
+];
+
+const NEWS = [
+  { title: "Welcome to the WNA Clinical Nutrition practice site", date: "Sample", blurb: "WNA Hospital is fictional. Click around: units, guidelines, playbook, and SOPs all link together.", tag: "Start here", link: "#/units", sample: true },
+  { title: "Try it: find a guideline from a unit page", date: "Sample", blurb: "Open Units, pick ICU 5, then open its Critical Care quick review. That's the on-the-floor path.", tag: "Practice", link: "#/units/ICU%205", sample: true },
+  { title: "Behavioral Health guideline in revision (sample)", date: "Sample", blurb: "Shows how a guideline under revision is flagged.", tag: "Guidelines", link: "#/guidelines/behavioral-health", sample: true },
+  { title: "Sample: new formulary posted", date: "Sample", blurb: "Placeholder news post to show the layout.", tag: "Formulary", link: "#/guidelines", sample: true }
+];
+
+const EVENTS = [
+  { m: "JAN", d: "05", title: "Sample: team meeting", time: "11:45 AM - 12:15 PM" },
+  { m: "JAN", d: "12", title: "Sample: guideline review session", time: "1:00 PM" },
+  { m: "JAN", d: "19", title: "Sample: holiday coverage (staffed)", time: "All day" },
+  { m: "FEB", d: "02", title: "Sample: new hire orientation", time: "8:00 AM" }
+];
+
+const QUICK_LINKS = [
+  { title: "Request time off", sub: "Scheduling SOP (sample)", icon: "cal", link: "#/operations/time-off" },
+  { title: "Submit productivity", sub: "Monthly reporting (sample)", icon: "chart", link: "#/operations/productivity" },
+  { title: "Estimated needs chart", sub: "Blank sample", icon: "calc", link: "#/guidelines/estimated-needs" },
+  { title: "Nutrition formulary", sub: "Blank sample", icon: "box", link: "#/guidelines#reference" },
+  { title: "Covering a new unit", sub: "Playbook", icon: "check", link: "#/playbook/covering-unfamiliar-unit" },
+  { title: "Career ladder", sub: "Sample SOP", icon: "star", link: "#/operations/career-ladder" }
+];
+
+</script>
+<script>
+document.getElementById("skiplink").addEventListener("click", function (e) { e.preventDefault(); var m = document.getElementById("content"); m.focus(); m.scrollIntoView(); });
+</script>
+<script>
+/* Front-end for the demo. Hash routing stands in for SharePoint page URLs:
+   #/home -> /SitePages/Home.aspx, #/guidelines/<id> -> /SitePages/Guideline-<id>.aspx, etc. */
+function startApp(C) {
+  "use strict";
+  const { GUIDELINES, REFERENCE_DOCS, PLAYBOOK, UNITS, SOPS, NEWS, EVENTS } = C;
+  const QUICK_LINKS = C.QUICK_LINKS || [];
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const G = Object.fromEntries(GUIDELINES.map((g) => [g.id, g]));
+  const P = Object.fromEntries(PLAYBOOK.map((p) => [p.id, p]));
+  const S = Object.fromEntries(SOPS.map((s) => [s.id, s]));
+  const U = Object.fromEntries(UNITS.map((u) => [u.code, u]));
+
+  /* ---------- icons (Fluent-style outlines, decorative) ---------- */
+  const ico = (name, size = 16) => {
+    const p = {
+      search: '<circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/>',
+      book: '<path d="M3 2h8a2 2 0 012 2v10H5a2 2 0 01-2-2z"/><path d="M3 12a2 2 0 012-2h8"/>',
+      doc: '<path d="M4 1h6l3 3v11H4z"/><path d="M10 1v3h3"/>',
+      down: '<path d="M8 2v9M4 7l4 4 4-4M3 14h10"/>',
+      cal: '<rect x="2" y="3" width="12" height="11" rx="1"/><path d="M2 6h12M5 1v3M11 1v3"/>',
+      chart: '<path d="M2 14h12M4 12V8M8 12V4M12 12V6"/>',
+      people: '<circle cx="6" cy="5" r="2.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/><circle cx="11.5" cy="5.5" r="2"/><path d="M11 10c2 0 3.5 1.2 3.5 3.5"/>',
+      star: '<path d="M8 1.5l2 4.2 4.5.6-3.3 3.1.8 4.5L8 11.7 4 13.9l.8-4.5L1.5 6.3 6 5.7z"/>',
+      box: '<path d="M2 5l6-3 6 3v6l-6 3-6-3z"/><path d="M2 5l6 3 6-3M8 8v6"/>',
+      check: '<path d="M2 8l4 4 8-8"/>',
+      chev: '<path d="M6 3l5 5-5 5"/>',
+      pin: '<path d="M8 15s5-4.5 5-8.5A5 5 0 003 6.5C3 10.5 8 15 8 15z"/><circle cx="8" cy="6.5" r="1.8"/>',
+      calc: '<rect x="3" y="1" width="10" height="14" rx="1"/><path d="M5 4h6M5 8h1M8 8h1M11 8h0M5 11h1M8 11h1"/>',
+      ext: '<path d="M9 2h5v5M14 2L7 9M12 10v4H2V4h4"/>',
+      phone: '<path d="M4 1h3l1 4-2 1a8 8 0 004 4l1-2 4 1v3a1 1 0 01-1 1A13 13 0 013 2a1 1 0 011-1z"/>',
+      edit: '<path d="M11 2l3 3-8 8H3v-3z"/>',
+      share: '<circle cx="12" cy="3.5" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="12" cy="12.5" r="2"/><path d="M6 7l4-2.5M6 9l4 2.5"/>',
+      follow: '<path d="M8 1.5l2 4.2 4.5.6-3.3 3.1.8 4.5L8 11.7 4 13.9l.8-4.5L1.5 6.3 6 5.7z"/>',
+      info: '<circle cx="8" cy="8" r="6.5"/><path d="M8 7v4M8 4.5v.5"/>',
+      print: '<path d="M4 6V1h8v5M4 12H2V6h12v6h-2M4 9h8v6H4z"/>',
+      flag: '<path d="M3 15V2M3 2h9l-2 3 2 3H3"/>',
+      bell: '<path d="M4 11V7a4 4 0 018 0v4l1.5 2h-11zM6.5 13.5a1.5 1.5 0 003 0"/>',
+      gear: '<circle cx="8" cy="8" r="2.2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6L13 13M3 13l1.4-1.4M11.6 4.4L13 3"/>',
+      waffle: '<g fill="currentColor" stroke="none"><circle cx="3" cy="3" r="1.3"/><circle cx="8" cy="3" r="1.3"/><circle cx="13" cy="3" r="1.3"/><circle cx="3" cy="8" r="1.3"/><circle cx="8" cy="8" r="1.3"/><circle cx="13" cy="8" r="1.3"/><circle cx="3" cy="13" r="1.3"/><circle cx="8" cy="13" r="1.3"/><circle cx="13" cy="13" r="1.3"/></g>'
+    }[name] || "";
+    return `<svg aria-hidden="true" focusable="false" width="${size}" height="${size}" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+  };
+
+  const pill = (status) => {
+    const cls = status === "Approved" ? "ok" : status === "In revision" ? "rev" : status === "Due for review" ? "due" : "draft";
+    return `<span class="pill ${cls}">${esc(status)}</span>`;
+  };
+  const ext = (f) => (f.toLowerCase().endsWith(".pdf") ? "pdf" : f.toLowerCase().endsWith(".doc") ? "doc" : "docx");
+  const fileIcon = (f) => `<span class="ficon ${ext(f)}" aria-hidden="true">${ext(f).toUpperCase()}</span>`;
+  /* Real file when the admin has uploaded one (fileUrl), otherwise a demo note. */
+  const fileLink = (o, inner, cls, demo, aria = "") => o.fileUrl
+    ? `<a class="${cls}" href="files/${encodeURIComponent(o.fileUrl)}" download ${aria}>${inner}</a>`
+    : `<a class="${cls}" href="#" data-demo="${demo} (Practice demo: in SharePoint this opens the file from the document library.)" ${aria}>${inner}</a>`;
+  const openLink = (o, inner, cls) => o.fileUrl
+    ? `<a class="${cls}" href="files/${encodeURIComponent(o.fileUrl)}?view=1" target="_blank" rel="noopener">${inner}<span class="sr-only"> (opens in a new tab)</span></a>`
+    : `<a class="${cls}" href="#" data-demo="(Practice demo: in SharePoint this opens the file from the document library.)">${inner}</a>`;
+  const sampleTag = (x) => (x && x.sample ? ' <span class="pill sample">Sample content</span>' : "");
+
+  /* ---------- toast stands in for file open / download / forms ---------- */
+  let toastTimer;
+  function toast(msg) {
+    const t = $("#toast");
+    $("#toastmsg").textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 7000);
+  }
+  $("#toastclose").addEventListener("click", () => $("#toast").classList.remove("show"));
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("[data-demo]");
+    if (!a) return;
+    e.preventDefault();
+    toast(a.getAttribute("data-demo"));
+  });
+
+  /* ---------- collapsible sections (SharePoint "collapsible section") ---------- */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("button.ch");
+    if (!b) return;
+    const panel = document.getElementById(b.getAttribute("aria-controls"));
+    const open = b.getAttribute("aria-expanded") === "true";
+    b.setAttribute("aria-expanded", String(!open));
+    panel.hidden = open;
+  });
+
+  /* ---------- build notes panel ---------- */
+  const buildNotes = (rows) => `
+    <section class="buildnotes" aria-label="SharePoint build notes">
+      <button type="button" class="ch" aria-expanded="false" aria-controls="bn-body">${ico("chev")} SharePoint build notes for this page (for site owners; hide before launch)</button>
+      <div class="bn" id="bn-body" hidden>
+        <table><caption class="sr-only">Web parts used on this page</caption>
+          <thead><tr><th scope="col">Element on page</th><th scope="col">Standard SharePoint feature</th><th scope="col">Setup</th></tr></thead>
+          <tbody>${rows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody>
+        </table>
+      </div>
+    </section>`;
+
+  /* Modern SharePoint pages have no breadcrumb, so none is drawn. Top nav + page title do the job. */
+  const crumbs = () => "";
+
+  /* ======================= PAGES ======================= */
+  function home() {
+    const rev = GUIDELINES.find((g) => g.status === "In revision" && g.sections);
+    const quick = QUICK_LINKS.map((q) => [q.title, q.sub, q.icon, q.link]);
+    return `
+    <h1 class="sr-only">Clinical Nutrition home</h1>
+    <section class="hero" aria-label="Featured">
+      <a class="tile big" href="#/units">
+        <span class="tbg" style="background:radial-gradient(circle at 80% 20%,var(--brandGreen) 0 18%,transparent 19%),radial-gradient(circle at 92% 70%,var(--brandBlue) 0 26%,transparent 27%),linear-gradient(135deg,#00375A,#00609C)"></span><span class="scrim"></span>
+        <span class="tbody"><span class="k">On the floor</span><span class="t">New to this unit?</span><span class="d">Pick the unit you're covering. See its go-to guidelines, playbook pages, huddle time, and charge RN contact on one screen.</span></span>
+      </a>
+      <a class="tile" href="#/guidelines">
+        <span class="tbg" style="background:repeating-linear-gradient(135deg,#004872 0 14px,#00517F 14px 28px)"></span><span class="scrim"></span>
+        <span class="tbody"><span class="k">Clinical</span><span class="t">Practice guidelines</span><span class="d">Quick reviews and approved versions</span></span>
+      </a>
+      <a class="tile" href="#/playbook">
+        <span class="tbg" style="background:linear-gradient(160deg,#2D6A1F,#3E8A2C)"></span><span class="scrim" style="background:linear-gradient(0deg,rgba(10,40,10,.7),rgba(10,40,10,.1))"></span>
+        <span class="tbody"><span class="k">How we do it here</span><span class="t">RD Playbook</span><span class="d">Searchable, by unit and topic</span></span>
+      </a>
+      <a class="tile" href="#/guidelines/${rev ? rev.id : ""}">
+        <span class="tbg" style="background:radial-gradient(circle at 85% 30%,#489DD1 0 30%,transparent 31%),#00375A"></span><span class="scrim"></span>
+        <span class="tbody"><span class="k">${rev ? esc(rev.status) : "Guidelines"}</span><span class="t">${rev ? esc(rev.title) + " guidelines" : "All guidelines"}</span><span class="d">${rev ? esc(rev.nextVersion || "") : ""}</span></span>
+      </a>
+      <a class="tile" href="#/operations">
+        <span class="tbg" style="background:linear-gradient(135deg,#323130,#605E5C)"></span><span class="scrim" style="background:linear-gradient(0deg,rgba(0,0,0,.6),transparent)"></span>
+        <span class="tbody"><span class="k">Operations</span><span class="t">SOPs and forms</span><span class="d">Time off, productivity, coverage</span></span>
+      </a>
+    </section>
+
+    <div class="section cols-2-1">
+      <div>
+        <section class="wp" aria-labelledby="h-search">
+          <h2 id="h-search">${ico("search", 18)} Find a guideline, playbook page, or SOP</h2>
+          <form class="bigsearch" role="search" id="homesearch" aria-label="Home page search">
+            <label for="homeq" class="sr-only">Search this site</label>
+            <input id="homeq" type="search" placeholder="Try: ICU, critical care, handoff, time off" autocomplete="off">
+            <button class="btn primary lg" type="submit">Search</button>
+          </form>
+          <div class="chips" aria-label="Common searches">
+            ${["ICU", "critical care", "handoff", "formulary", "3 North", "time off", "productivity"].map((t) => `<button type="button" class="chip" data-q="${t}">${t}</button>`).join("")}
+          </div>
+        </section>
+
+        <section class="wp" style="margin-top:24px" aria-labelledby="h-units">
+          <h2 id="h-units">${ico("pin", 18)} Covering a unit today? <a class="seeall" href="#/units">All units</a></h2>
+          <div class="unitgrid">
+            ${UNITS.map((u) => `<a class="unitcard" href="#/units/${encodeURIComponent(u.code)}"><span class="uc">${esc(u.code)}</span><br><span class="un">${esc(u.name)}</span></a>`).join("")}
+          </div>
+        </section>
+
+        <section class="wp" style="margin-top:24px" aria-labelledby="h-news">
+          <h2 id="h-news">News <a class="seeall" href="#/home" data-demo="Demo: 'See all' opens the site's News page (all news posts).">See all</a></h2>
+          <div class="news">
+            ${NEWS.map((n, i) => `<a class="newsitem" href="${n.link}">
+              <span class="nthumb" aria-hidden="true" style="background:${["linear-gradient(135deg,#2D6A1F,#82C670)", "linear-gradient(135deg,#00375A,#489DD1)", "linear-gradient(135deg,#004872,#82C670)", "linear-gradient(135deg,#605E5C,#C8C6C4)"][i % 4]}"></span>
+              <span><span class="ntag">${esc(n.tag)}</span>${n.sample ? ' <span class="pill sample">Sample</span>' : ""}<span class="nt" style="display:block">${esc(n.title)}</span><span class="nb">${esc(n.blurb)}</span><span class="nd" style="display:block">${esc(n.date)}</span></span></a>`).join("")}
+          </div>
+        </section>
+      </div>
+
+      <div>
+        <section class="wp" aria-labelledby="h-ql">
+          <h2 id="h-ql">Quick links</h2>
+          <div class="qlinks" style="grid-template-columns:1fr">
+            ${quick.map((q) => `<a class="ql" href="${q[3]}" ${q[3].startsWith("http") ? 'target="_blank" rel="noopener"' : ""}><span class="ic">${ico(q[2], 18)}</span><span><span class="lt">${esc(q[0])}${q[3].startsWith("http") ? '<span class="sr-only"> (opens in a new tab)</span>' : ""}</span><br><span class="ls">${esc(q[1])}</span></span></a>`).join("")}
+          </div>
+        </section>
+        <section class="wp" style="margin-top:24px" aria-labelledby="h-ev">
+          <h2 id="h-ev">${ico("cal", 18)} Upcoming</h2>
+          <ul class="events">
+            ${EVENTS.map((e) => `<li><span class="dbox" aria-hidden="true"><span class="m">${e.m}</span><br><span class="dd">${e.d}</span></span><span><span class="sr-only">${e.m} ${e.d}: </span><span class="et">${esc(e.title)}</span><br><span class="etime">${esc(e.time)}</span></span></li>`).join("")}
+          </ul>
+        </section>
+        <section class="wp emph-soft" style="margin-top:24px" aria-labelledby="h-upd">
+          <h2 id="h-upd">Recently updated guidelines</h2>
+          <ul style="margin:0;padding-left:18px">
+            ${GUIDELINES.filter((g) => g.sections).slice(0, 5).map((g) => `<li style="margin:6px 0"><a href="#/guidelines/${g.id}">${esc(g.title)}</a> <span class="small muted">rev. ${esc(g.revised)}</span></li>`).join("")}
+          </ul>
+        </section>
+      </div>
+    </div>
+    ${buildNotes([
+      ["Featured tiles", "Hero web part, Tiles layout (5 items)", "Upload any image per tile (organization-approved). SharePoint adds the dark overlay behind tile text. Add alt text to each image."],
+      ["Search box + chips", "Header search (Microsoft Search) scoped to this site; chips are Quick links (Button layout) to saved searches", "Nothing to set up; site search works out of the box. The chips are just Quick links whose URLs are saved searches (copy the address after searching)."],
+      ["Covering a unit today?", "Quick links web part (Tiles) pointing to each unit's page, or a List web part on the Units list", "One site page per unit, copied from a page template (+ New > Page > Templates)."],
+      ["News", "News web part, Side-by-side layout", "Post news from the site's + New > News post."],
+      ["Quick links", "Quick links web part, List layout with icons", "External links open in a new tab (setting on each link)."],
+      ["Upcoming", "Events web part, Compact layout", "Uses the site's built-in Events list. Add events with + Add event."],
+      ["Recently updated guidelines", "Highlighted content web part", "Source: Practice Guidelines library, sort by Modified, filter Status = Approved."],
+      ["Theme colors", "Settings (gear) > Change the look > Theme", "Pick a built-in theme or your organization's theme. A brand-new custom color theme needs a SharePoint admin once; everything else here doesn't."]
+    ])}`;
+  }
+
+  function guidelines() {
+    const specialties = [...new Set(GUIDELINES.map((g) => g.specialty))].sort();
+    return `
+    ${crumbs([["Home", "#/home"], ["Practice guidelines"]])}
+    <h1 class="pagetitle">Practice guidelines</h1>
+    <p class="pagemeta"><span>WNA Hospital practice guidelines (blank samples for display only)</span><span>Quick reviews are for fast reference on the floor. The approved document is the source of truth.</span></p>
+    <div class="section cols-1-3">
+      <aside class="side" aria-label="About this library">
+        <section class="wp">
+          <h2 style="font-size:16px">How to use this page</h2>
+          <ol style="padding-left:18px;margin:0;font-size:14px">
+            <li><strong>Quick review</strong> opens a one-screen summary with key numbers.</li>
+            <li style="margin-top:6px"><strong>Approved version</strong> downloads the current approved document.</li>
+            <li style="margin-top:6px">Anything marked <span class="pill rev">In revision</span> still uses the approved version until the update is published.</li>
+          </ol>
+        </section>
+        <section class="wp" id="reference">
+          <h2 style="font-size:16px">Reference documents</h2>
+          <ul style="list-style:none;padding:0;margin:0;font-size:14px">
+            ${REFERENCE_DOCS.map((r) => `<li style="padding:6px 0;border-bottom:1px solid var(--neutralLighter)">${openLink(r, esc(r.title), "")}<br><span class="small muted">${esc(r.detail)}</span></li>`).join("")}
+          </ul>
+        </section>
+      </aside>
+      <section class="wp" aria-labelledby="h-lib">
+        <h2 id="h-lib">${ico("doc", 18)} Guideline library</h2>
+        <div class="listbar">
+          <label for="gfilter">Filter by keyword</label>
+          <input id="gfilter" class="filter" type="search" placeholder="e.g. ICU, dialysis, lithium">
+          <label for="gspec">Specialty</label>
+          <select id="gspec"><option value="">All</option>${specialties.map((s) => `<option>${esc(s)}</option>`).join("")}</select>
+          <label for="gstatus">Status</label>
+          <select id="gstatus"><option value="">All</option><option>Approved</option><option>In revision</option><option>Due for review</option></select>
+        </div>
+        <p class="resultcount" id="gcount" aria-live="polite"></p>
+        <table class="list">
+          <caption class="sr-only">Practice guidelines with status, version, and actions</caption>
+          <thead><tr><th scope="col">Guideline</th><th scope="col">Specialty</th><th scope="col">Status</th><th scope="col">Revised</th><th scope="col">Actions</th></tr></thead>
+          <tbody id="gbody"></tbody>
+        </table>
+      </section>
+    </div>
+    ${buildNotes([
+      ["Guideline library table", "Document library + Document library web part", "Add columns with + Add column: Specialty (Choice), Status (Choice), Units (Choice, multiple), Revised (Date), Quick review (Hyperlink). Library settings > Versioning: turn on Require content approval and major versions so readers only see approved versions. Turn on major versions and Content approval so readers only see approved majors."],
+      ["Status pills", "Choice column with colored choices", "Column settings > Edit > choose a color for each choice (Approved green, In revision yellow, Due for review red). The text always shows, so color isn't the only cue."],
+      ["Filters", "Filters pane on the library view, plus a Keyword search box in the library", "Point the Practice guidelines nav link at the library itself: it has a search box and the Filters pane (open it with the filter icon; Specialty and Status show up automatically). The filter row in this demo stands in for that pane."],
+      ["Download approved version", "File action: Download (major version)", "Readers without Edit rights see only the latest approved major version."],
+      ["Reference documents", "Second document library ('Reference') in a Document library web part", "Formulary, KDOQI, career ladder policy and checklist."],
+      ["Next review reminders (optional)", "Library > Automate > Set a reminder", "Built-in, no setup beyond picking the Revised date column. Skip it if you don't want emails."]
+    ])}`;
+  }
+  function wireGuidelines() {
+    const body = $("#gbody"), f = $("#gfilter"), sp = $("#gspec"), st = $("#gstatus");
+    function draw() {
+      const q = f.value.trim().toLowerCase();
+      const rows = GUIDELINES.filter((g) => (!sp.value || g.specialty === sp.value) && (!st.value || g.status === st.value) &&
+        (!q || [g.title, g.specialty, g.keywords, (g.units || []).join(" ")].join(" ").toLowerCase().includes(q)))
+        .sort((a, b) => a.title.localeCompare(b.title));
+      $("#gcount").textContent = `${rows.length} of ${GUIDELINES.length} guidelines`;
+      body.innerHTML = rows.map((g) => `<tr>
+        <td><span class="fname">${fileIcon(g.file)}<span>${g.sections ? `<a href="#/guidelines/${g.id}">${esc(g.title)}</a>` : esc(g.title)}<br><span class="small muted">${esc(g.file)}</span></span></span></td>
+        <td>${esc(g.specialty)}</td>
+        <td>${pill(g.status)}${g.nextVersion ? `<br><span class="small muted">${esc(g.nextVersion)}</span>` : ""}</td>
+        <td>${esc(g.revised)}</td>
+        <td><span class="rowact">${g.sections ? `<a class="btn" href="#/guidelines/${g.id}" aria-label="Quick review: ${esc(g.title)}">Quick review</a>` : `<span class="small muted" style="align-self:center">No quick review yet</span>`}
+          ${fileLink(g, `${ico("down")} Approved`, "btn", `Downloads the current approved version of ${esc(g.file)}.`, `aria-label="Download approved version of ${esc(g.title)}"`)}</span></td></tr>`).join("") ||
+        `<tr><td colspan="5">No guidelines match. Clear the filters or try another word.</td></tr>`;
+    }
+    [f, sp, st].forEach((el) => el.addEventListener("input", draw));
+    draw();
+  }
+
+  function guidelinePage(id) {
+    const g = G[id];
+    if (!g) return notFound();
+    if (!g.sections) {
+      return `${crumbs([["Home", "#/home"], ["Practice guidelines", "#/guidelines"], [g.title]])}
+      <h1 class="pagetitle">${esc(g.title)}</h1>
+      <div class="wp" style="max-width:760px"><p>A quick-review page hasn't been built for this guideline yet. Use the approved version.</p>
+      ${fileLink(g, `${ico("down")} Download approved version`, "btn primary", `Downloads the current approved version of ${esc(g.file)}.`)}</div>`;
+    }
+    const related = PLAYBOOK.filter((p) => p.related.includes(id));
+    const units = UNITS.filter((u) => u.guidelines.includes(id));
+    return `
+    ${crumbs([["Home", "#/home"], ["Practice guidelines", "#/guidelines"], [g.title]])}
+    <h1 class="pagetitle">${esc(g.title)}: quick review</h1>
+    <p class="pagemeta"><span>${pill(g.status)}</span><span>Revised ${esc(g.revised)}</span><span>Specialty: ${esc(g.specialty)}</span>${sampleTag(g)}</p>
+    <div class="section cols-2-1" style="margin-top:8px">
+      <article class="wp" aria-labelledby="h-glance">
+        ${g.revisionNote ? `<div class="callout warn" role="note"><strong>Revision in progress.</strong> ${esc(g.revisionNote)}</div>` : ""}
+        <div class="callout info" role="note">${ico("info")} Summary of the approved ${esc(g.revised)} guideline. If this page and the approved document ever disagree, follow the document and report the mismatch.</div>
+        <h2 id="h-glance">At a glance</h2>
+        <div class="glance">${g.glance.map((c) => `<div class="gcard"><div class="gl">${esc(c.label)}</div><div class="gv">${esc(c.value)}</div><div class="gs">${esc(c.sub)}</div></div>`).join("")}</div>
+        <h2 style="margin-top:24px" id="h-details">Details</h2>
+                <div>
+          ${g.sections.map((s, i) => `<div class="collapse"><h3><button type="button" class="ch" id="sh-${i}" aria-expanded="${i < 2}" aria-controls="sb-${i}">${ico("chev")} ${esc(s.h)}</button></h3>
+            <div class="cb" id="sb-${i}" role="region" aria-labelledby="sh-${i}" ${i < 2 ? "" : "hidden"}>
+              ${s.items ? `<ul>${s.items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}
+              ${s.table ? `<table class="data"><caption class="sr-only">${esc(s.h)}</caption><thead><tr>${s.table.head.map((h) => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead><tbody>${s.table.rows.map((r) => `<tr>${r.map((c, j) => j === 0 ? `<th scope="row">${esc(c)}</th>` : `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>${s.table.note ? `<p class="small muted">${esc(s.table.note)}</p>` : ""}` : ""}
+            </div></div>`).join("")}
+        </div>
+        <h2 style="margin-top:24px">References (from the approved document)</h2>
+        <ol class="refs">${g.refs.map((r) => `<li>${esc(r)}</li>`).join("")}</ol>
+      </article>
+      <aside class="side" aria-label="Guideline details">
+        <section class="wp">
+          <h2 style="font-size:16px">Approved document</h2>
+          <dl class="props"><dt>File</dt><dd>${esc(g.file)}</dd><dt>Revised</dt><dd>${esc(g.revised)}</dd><dt>Status</dt><dd>${esc(g.status)}</dd></dl>
+          <div class="btnrow" style="margin-top:12px">
+            ${fileLink(g, `${ico("down")} Download approved`, "btn primary", `Downloads the current approved version of ${esc(g.file)}.`)}
+            ${openLink(g, `${ico("doc")} Open`, "btn")}
+          </div>
+        </section>
+        <section class="wp">
+          <h2 style="font-size:16px">On this page</h2>
+          <ul class="jump"><li><a href="#h-glance" data-jump>At a glance</a></li>${g.sections.map((s, i) => `<li><a href="#sh-${i}" data-jump data-open="${i}">${esc(s.h)}</a></li>`).join("")}</ul>
+        </section>
+        ${related.length ? `<section class="wp"><h2 style="font-size:16px">Related playbook pages</h2><ul style="padding-left:18px;margin:0">${related.map((p) => `<li style="margin:4px 0"><a href="#/playbook/${p.id}">${esc(p.title)}</a></li>`).join("")}</ul></section>` : ""}
+        ${units.length ? `<section class="wp"><h2 style="font-size:16px">Units that use this most</h2><p style="margin:0">${units.map((u) => `<a href="#/units/${encodeURIComponent(u.code)}">${esc(u.code)}</a>`).join(", ")}</p></section>` : ""}
+        <section class="wp"><h2 style="font-size:16px">Something wrong?</h2><p style="margin:0 0 8px;font-size:14px">Report a mismatch between this summary and the approved document.</p><a class="btn" href="#" data-demo="Demo: opens a Microsoft Forms survey that logs to the 'Guideline feedback' list.">${ico("flag")} Report an issue</a></section>
+      </aside>
+    </div>
+    ${buildNotes([
+      ["Whole page", "Site page made from a page template", "Build one quick review page, then Save as template (bottom of the Publish menu). New guideline pages start from it."],
+      ["Revision / info banners", "One-column section with a section background color", "Edit section > Section background. Put a Text web part in it."],
+      ["At a glance cards", "Three-column section, soft section background, a Text web part in each column", "Heading 3 for the label, paragraph for the value. Keep numbers identical to the approved document."],
+      ["Details accordions", "Collapsible sections (built into modern pages)", "Edit section > turn on Collapsible section. Set which ones start expanded."],
+      ["Tables", "Text web part tables", "Header row turned on so screen readers read column headers."],
+      ["Download approved / Open", "Button web part or Quick links pointing to the file in the library", "Link to the file, not a copy, so it always opens the current approved version."],
+      ["Related playbook pages", "Highlighted content web part", "Source: this site's pages. Filter: page property Related guideline = this guideline."],
+      ["Report an issue", "Button web part linking to a Microsoft Forms survey", "Responses collect in Forms. No flow needed."], ["On this page links", "Text web part with links to the page's headings", "Hover a heading on the published page, copy its link, paste it into the list."]
+    ])}`;
+  }
+  function wireGuidelinePage() {
+    document.querySelectorAll("[data-jump]").forEach((a) => a.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.getElementById(a.getAttribute("href").slice(1));
+      const i = a.getAttribute("data-open");
+      if (i !== null) { const b = $("#sh-" + i); b.setAttribute("aria-expanded", "true"); $("#sb-" + i).hidden = false; }
+      target.scrollIntoView({ block: "start" });
+      target.focus({ preventScroll: true });
+    }));
+  }
+
+  function playbook() {
+    const cats = [...new Set(PLAYBOOK.map((p) => p.category))].sort();
+    const unitOpts = [...new Set(PLAYBOOK.flatMap((p) => p.units))].sort((a, b) => (a === "All units" ? -1 : b === "All units" ? 1 : a.localeCompare(b)));
+    return `
+    ${crumbs([["Home", "#/home"], ["RD Playbook"]])}
+    <h1 class="pagetitle">RD Playbook</h1>
+    <p class="pagemeta"><span>How we do things here. Short, step-by-step, searchable.</span><span>Clinical numbers live in the guidelines; playbook pages link to them.</span></p>
+    <div class="section cols-1-3">
+      <aside class="wp filterpane" aria-label="Filter playbook">
+        <h2 style="font-size:16px">Filter</h2>
+        <fieldset><legend>Topic</legend>${cats.map((c, i) => `<label><input type="checkbox" name="cat" value="${esc(c)}" id="cat${i}"> ${esc(c)} <span class="muted small">(${PLAYBOOK.filter((p) => p.category === c).length})</span></label>`).join("")}</fieldset>
+        <fieldset><legend>Unit</legend>${unitOpts.map((u, i) => `<label><input type="checkbox" name="unit" value="${esc(u)}" id="unit${i}"> ${esc(u)}</label>`).join("")}</fieldset>
+        <button type="button" class="btn" id="pbclear">Clear filters</button>
+      </aside>
+      <section class="wp" aria-labelledby="h-pb">
+        <h2 id="h-pb" class="sr-only">Playbook pages</h2>
+        <form class="bigsearch" role="search" aria-label="Playbook search" onsubmit="return false">
+          <label for="pbq" class="sr-only">Search the playbook</label>
+          <input id="pbq" type="search" placeholder="Search the playbook: handoff, ICU, formulary..." autocomplete="off">
+        </form>
+        <p class="resultcount" id="pbcount" aria-live="polite"></p>
+        <div id="pblist"></div>
+      </section>
+    </div>
+    ${buildNotes([
+      ["Each playbook entry", "A site page (not a Word doc), made from a saved page template", "In the Pages library, + Add column: Category (Choice), Units (Choice, multiple), Tags (Choice, multiple, allow fill-in), Related guideline (Lookup), Owner (Person), Last reviewed (Date)."],
+      ["Search box + filters", "The Site Pages library view itself", "Point the RD Playbook nav link at a Pages library view named Playbook (filter Category is not empty). That view has a search box and the Filters pane with Category and Units checkboxes, like this demo."],
+      ["Topic / Unit filters", "Filters pane", "Shows Choice columns automatically. No setup."],
+      ["Converting the Word playbook", "Split by heading into pages", "One heading in the Word playbook = one page. Keep the old doc archived in a library for history."],
+      ["Draft pages", "Pages stay drafts until you Publish", "Readers only see published pages. For sign-off first, turn on Page approval (Pages library > Automate > Configure page approval)."]
+    ])}`;
+  }
+  function wirePlaybook() {
+    const q = $("#pbq");
+    function draw() {
+      const term = q.value.trim().toLowerCase();
+      const cats = [...document.querySelectorAll("input[name=cat]:checked")].map((i) => i.value);
+      const units = [...document.querySelectorAll("input[name=unit]:checked")].map((i) => i.value);
+      const rows = PLAYBOOK.filter((p) => (!cats.length || cats.includes(p.category)) &&
+        (!units.length || p.units.some((u) => units.includes(u))) &&
+        (!term || [p.title, p.summary, p.tags.join(" "), p.steps.join(" "), p.category].join(" ").toLowerCase().includes(term)));
+      $("#pbcount").textContent = `${rows.length} page${rows.length === 1 ? "" : "s"}`;
+      $("#pblist").innerHTML = rows.map((p) => `<a class="pbitem" href="#/playbook/${p.id}">
+        <span class="pt">${hl(p.title, term)}</span>
+        <p class="ps">${hl(p.summary, term)}</p>
+        <span class="pbmeta"><span class="tag">${esc(p.category)}</span>${p.units.map((u) => `<span class="tag">${esc(u)}</span>`).join("")}${p.draft ? '<span class="pill draft">Draft</span>' : ""}${p.sample ? '<span class="pill sample">Sample content</span>' : ""}<span>Updated ${esc(p.updated)}</span></span></a>`).join("") ||
+        `<p>No pages match. Try fewer filters or another word.</p>`;
+    }
+    q.addEventListener("input", draw);
+    document.querySelectorAll(".filterpane input").forEach((i) => i.addEventListener("change", draw));
+    $("#pbclear").addEventListener("click", () => { document.querySelectorAll(".filterpane input").forEach((i) => (i.checked = false)); q.value = ""; draw(); });
+    draw();
+  }
+  function hl(text, term) {
+    const t = esc(text);
+    if (!term) return t;
+    const re = new RegExp("(" + term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig");
+    return t.replace(re, "<mark>$1</mark>");
+  }
+
+  function playbookPage(id) {
+    const p = P[id];
+    if (!p) return notFound();
+    return `
+    ${crumbs([["Home", "#/home"], ["RD Playbook", "#/playbook"], [p.title]])}
+    <h1 class="pagetitle">${esc(p.title)}</h1>
+    <p class="pagemeta"><span>${esc(p.category)}</span><span>Updated ${esc(p.updated)}</span><span>Owner: ${esc(p.owner)}</span>${p.draft ? '<span class="pill draft">Draft - not yet approved</span>' : ""}${sampleTag(p)}</p>
+    <div class="section cols-2-1" style="margin-top:8px">
+      <article class="wp">
+        <p style="font-size:16px;margin-top:0">${esc(p.summary)}</p>
+        <h2>Steps</h2>
+        <ol class="steps">${p.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>
+      </article>
+      <aside class="side">
+        <section class="wp"><h2 style="font-size:16px">Related guidelines</h2>
+          <ul style="padding-left:18px;margin:0">${p.related.map((r) => G[r] ? `<li style="margin:4px 0"><a href="#/guidelines/${r}">${esc(G[r].title)}</a> ${pill(G[r].status)}</li>` : "").join("")}</ul></section>
+        <section class="wp"><h2 style="font-size:16px">Page properties</h2>
+          <dl class="props"><dt>Category</dt><dd>${esc(p.category)}</dd><dt>Units</dt><dd>${esc(p.units.join(", "))}</dd><dt>Tags</dt><dd>${esc(p.tags.join(", "))}</dd><dt>Last reviewed</dt><dd>${esc(p.updated)}</dd></dl></section>
+        <section class="wp"><h2 style="font-size:16px">Was this helpful?</h2><div class="btnrow"><a class="btn" href="#" data-demo="Demo: page Like (built into SharePoint pages).">Yes</a><a class="btn" href="#" data-demo="Demo: opens a comment box (page comments are built in).">Suggest an edit</a></div></section>
+      </aside>
+    </div>
+    ${buildNotes([
+      ["Steps", "Text web part, numbered list", "Keep each step to one action."],
+      ["Page properties panel", "Page properties web part", "Shows Category, Units, Tags, Last reviewed."],
+      ["Related guidelines", "Quick links (List layout) or Highlighted content by Related guideline", ""],
+      ["Was this helpful?", "Built-in page Likes and Comments", "Turn comments on per page."]
+    ])}`;
+  }
+
+  function unitsPage() {
+    return `
+    ${crumbs([["Home", "#/home"], ["Unit quick reference"]])}
+    <h1 class="pagetitle">Unit quick reference</h1>
+    <p class="pagemeta"><span>Pick the unit you're covering.</span><span>Non-MH units, huddle times, and phone numbers are sample data.</span></p>
+    <section class="wp">
+      <table class="list"><caption class="sr-only">Units with type, huddle time, contact, and key guidelines</caption>
+        <thead><tr><th scope="col">Unit</th><th scope="col">Type</th><th scope="col">Huddle</th><th scope="col">Charge RN</th><th scope="col">Go-to guidelines</th></tr></thead>
+        <tbody>${UNITS.map((u) => `<tr><th scope="row" style="font-weight:400"><a href="#/units/${encodeURIComponent(u.code)}"><strong>${esc(u.code)}</strong></a><br><span class="small muted">${esc(u.name)}</span></th><td>${esc(u.type)}</td><td>${esc(u.huddle)}</td><td>${esc(u.phone)} <span class="pill sample">Sample</span></td><td>${u.guidelines.map((g) => G[g] ? `<a href="#/guidelines/${g}">${esc(G[g].title)}</a>` : "").join(", ")}</td></tr>`).join("")}</tbody>
+      </table>
+    </section>
+    ${buildNotes([["Units table", "SharePoint list 'Units' + List web part", "Make it with + New > List. Columns: Unit code, Name, Type (Choice), Huddle (Text), Charge RN phone (Text), Go-to guidelines (Lookup, multiple), Notes. Phone numbers should come from the hospital directory."]])}`;
+  }
+  function unitPage(code) {
+    const u = U[code];
+    if (!u) return notFound();
+    return `
+    ${crumbs([["Home", "#/home"], ["Unit quick reference", "#/units"], [u.code]])}
+    <h1 class="pagetitle">${esc(u.code)}: ${esc(u.name)}</h1>
+    <p class="pagemeta"><span>${esc(u.type)}</span><span>Huddle ${esc(u.huddle)}</span><span>${ico("phone")} Charge RN ${esc(u.phone)} <span class="pill sample">Sample</span></span></p>
+    <div class="callout info" role="note"><strong>Before you start:</strong> ${esc(u.notes)}</div>
+    <div class="section cols-1-1-1" style="margin-top:8px">
+      <section class="wp"><h2>Go-to guidelines</h2>
+        ${u.guidelines.map((g) => G[g] ? `<div style="padding:8px 0;border-bottom:1px solid var(--neutralLighter)"><a href="#/guidelines/${g}"><strong>${esc(G[g].title)}</strong></a> ${pill(G[g].status)}<br>${G[g].glance ? `<span class="small muted">${esc(G[g].glance[0].label)}: ${esc(G[g].glance[0].value)}</span>` : `<span class="small muted">Approved document only</span>`}</div>` : "").join("")}</section>
+      <section class="wp"><h2>Playbook for this unit</h2>
+        ${u.playbook.length ? `<ul style="padding-left:18px;margin:0">${u.playbook.map((p) => `<li style="margin:6px 0"><a href="#/playbook/${p}">${esc(P[p].title)}</a></li>`).join("")}</ul>` : `<p class="muted">No unit-specific pages yet.</p>`}
+        <p style="margin-bottom:0"><a href="#/playbook/covering-unfamiliar-unit">Covering a unit you don't usually work</a></p></section>
+      <section class="wp"><h2>Contacts</h2><dl class="props"><dt>Charge RN</dt><dd>${esc(u.phone)}</dd><dt>Primary RD</dt><dd>Sample name</dd><dt>RD on call</dt><dd>See paging directory</dd></dl></section>
+    </div>
+    ${buildNotes([["Whole page", "Site page from a 'Unit' page template", "Saved page template so every unit page matches."], ["Go-to guidelines", "Highlighted content web part, filtered by page property Units", ""], ["Contacts", "People web part (for named RDs) + Text", "People web part pulls names from Entra ID."]])}`;
+  }
+
+  function operations() {
+    const cats = [...new Set(SOPS.map((s) => s.category))];
+    return `
+    ${crumbs([["Home", "#/home"], ["Operations"]])}
+    <h1 class="pagetitle">Operations: SOPs and forms</h1>
+    <p class="pagemeta"><span>Non-clinical how-tos. Most steps here are sample placeholders until department owners fill them in.</span></p>
+    <section class="wp"><h2>Most used</h2>
+      <div class="qlinks four">${["time-off", "productivity", "holiday", "career-ladder"].map((id) => `<a class="ql" href="#/operations/${id}"><span class="ic">${ico(S[id].icon, 18)}</span><span><span class="lt">${esc(S[id].title)}</span><br><span class="ls">${esc(S[id].category)}</span></span></a>`).join("")}</div>
+    </section>
+    <div class="section cols-1-1-1">
+      ${cats.map((c) => `<section class="wp"><h2>${esc(c)}</h2><ul style="list-style:none;padding:0;margin:0">${SOPS.filter((s) => s.category === c).map((s) => `<li style="padding:8px 0;border-bottom:1px solid var(--neutralLighter)"><a href="#/operations/${s.id}"><strong>${esc(s.title)}</strong></a>${s.sample ? ' <span class="pill sample">Sample</span>' : ""}<br><span class="small muted">${esc(s.summary)}</span></li>`).join("")}</ul></section>`).join("")}
+    </div>
+    ${buildNotes([["Most used", "Quick links web part, Button layout", ""], ["SOP groups", "Highlighted content per category (Site Pages where Category = SOP group)", "Or one List web part over a 'SOPs' list with links."], ["Forms", "Microsoft Forms or Power Apps list forms", "Time off itself stays in the official scheduling system; link out, don't rebuild it."]])}`;
+  }
+  function sopPage(id) {
+    const s = S[id];
+    if (!s) return notFound();
+    return `
+    ${crumbs([["Home", "#/home"], ["Operations", "#/operations"], [s.title]])}
+    <h1 class="pagetitle">${esc(s.title)}</h1>
+    <p class="pagemeta"><span>${esc(s.category)}</span><span>Updated ${esc(s.updated)}</span>${sampleTag(s)}</p>
+    <div class="section cols-2-1" style="margin-top:8px">
+      <article class="wp"><p style="font-size:16px;margin-top:0">${esc(s.summary)}</p><h2>Steps</h2><ol class="steps">${s.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></article>
+      <aside class="side">${s.links.length ? `<section class="wp"><h2 style="font-size:16px">Links and forms</h2><ul style="padding-left:18px;margin:0">${s.links.map((l) => `<li style="margin:6px 0"><a href="#" data-demo="Demo: '${esc(l)}' would open here.">${esc(l)}</a></li>`).join("")}</ul></section>` : ""}
+        <section class="wp"><h2 style="font-size:16px">Questions?</h2><p style="margin:0;font-size:14px">Ask in the team channel or contact the page owner.</p></section></aside>
+    </div>`;
+  }
+
+  /* ---------- site-wide search (Microsoft Search stand-in) ---------- */
+  function searchPage(q) {
+    const term = (q || "").trim();
+    const t = term.toLowerCase();
+    const match = (s) => s.toLowerCase().includes(t);
+    const gs = term ? GUIDELINES.filter((g) => match([g.title, g.specialty, g.keywords, (g.glance || []).map((c) => c.value + " " + c.sub).join(" "), (g.sections || []).map((s) => (s.items || []).join(" ")).join(" ")].join(" "))) : [];
+    const ps = term ? PLAYBOOK.filter((p) => match([p.title, p.summary, p.tags.join(" "), p.steps.join(" ")].join(" "))) : [];
+    const ss = term ? SOPS.filter((s) => match([s.title, s.summary, s.steps.join(" ")].join(" "))) : [];
+    const us = term ? UNITS.filter((u) => match([u.code, u.name, u.type].join(" "))) : [];
+    const snippet = (text) => { const i = text.toLowerCase().indexOf(t); if (i < 0) return esc(text.slice(0, 140)); const s = Math.max(0, i - 60); return (s ? "…" : "") + hl(text.slice(s, i + 100), term) + "…"; };
+    const gText = (g) => [(g.glance || []).map((c) => `${c.label}: ${c.value}. ${c.sub}`).join(" "), (g.sections || []).map((s) => (s.items || []).join(" ")).join(" ")].join(" ") || g.file;
+    const total = gs.length + ps.length + ss.length + us.length;
+    return `
+    ${crumbs([["Home", "#/home"], ["Search"]])}
+    <h1 class="pagetitle">Search results${term ? ` for "${esc(term)}"` : ""}</h1>
+    <form class="bigsearch" role="search" id="searchform" aria-label="Search results search" style="max-width:720px;margin:0 8px 8px">
+      <label for="sq" class="sr-only">Search this site</label>
+      <input id="sq" type="search" value="${esc(term)}" autocomplete="off"><button class="btn primary lg">Search</button>
+    </form>
+    <p class="resultcount" style="margin-left:8px" role="status">${term ? `${total} result${total === 1 ? "" : "s"}` : "Type a word to search guidelines, the playbook, SOPs, and units."}</p>
+    <div class="section cols-2-1" style="margin-top:8px">
+      <div class="wp">
+        ${gs.length ? `<section class="sgroup"><h2>Guidelines (${gs.length})</h2>${gs.map((g) => `<div class="sres"><a href="#/guidelines/${g.id}">${hl(g.title, term)}</a> ${pill(g.status)}<div class="sp">${snippet(gText(g))}</div></div>`).join("")}</section>` : ""}
+        ${ps.length ? `<section class="sgroup"><h2>Playbook (${ps.length})</h2>${ps.map((p) => `<div class="sres"><a href="#/playbook/${p.id}">${hl(p.title, term)}</a><div class="sp">${snippet(p.summary + " " + p.steps.join(" "))}</div></div>`).join("")}</section>` : ""}
+        ${ss.length ? `<section class="sgroup"><h2>SOPs (${ss.length})</h2>${ss.map((s) => `<div class="sres"><a href="#/operations/${s.id}">${hl(s.title, term)}</a><div class="sp">${snippet(s.summary + " " + s.steps.join(" "))}</div></div>`).join("")}</section>` : ""}
+        ${us.length ? `<section class="sgroup"><h2>Units (${us.length})</h2>${us.map((u) => `<div class="sres"><a href="#/units/${encodeURIComponent(u.code)}">${hl(u.code + ": " + u.name, term)}</a></div>`).join("")}</section>` : ""}
+        ${term && !total ? `<p>No results. Try a broader word, like "protein" instead of "protein needs".</p>` : ""}
+      </div>
+      <aside class="wp emph-soft"><h2 style="font-size:16px">Search tips</h2><ul style="padding-left:18px;margin:0;font-size:14px"><li>Search finds words inside quick reviews, playbook pages and SOPs.</li><li style="margin-top:6px">Unit codes work: "${esc((UNITS[0] || {}).code || "")}".</li><li style="margin-top:6px">In SharePoint, results also include text inside the approved documents.</li></ul></aside>
+    </div>
+    ${buildNotes([["Search results", "Microsoft Search (built in), scoped to this site", "Nothing to set up. Text inside Word and PDF files is searchable automatically."]])}`;
+  }
+
+  function notFound() {
+    return `<h1 class="pagetitle">Page not found</h1><p style="margin-left:8px"><a href="#/home">Go to the home page</a></p>`;
+  }
+
+  /* ---------- router ---------- */
+  const titles = { home: "Home", guidelines: "Practice guidelines", playbook: "RD Playbook", units: "Units", operations: "Operations", search: "Search" };
+  function route() {
+    const raw = location.hash.replace(/^#\/?/, "") || "home";
+    const [pathPart, query] = raw.split("?");
+    const [section, rawId] = pathPart.split("/");
+    const id = rawId ? decodeURIComponent(rawId) : rawId;
+    if (section === "guidelines" && pathPart.includes("#")) { /* anchor inside guidelines page */ }
+    const sec = section.split("#")[0];
+    let html, wire = null, title = titles[sec] || "Clinical Nutrition";
+    switch (sec) {
+      case "home": html = home(); wire = wireHome; break;
+      case "guidelines": if (id) { html = guidelinePage(id); wire = wireGuidelinePage; title = (G[id] ? G[id].title : "Guideline") + " quick review"; } else { html = guidelines(); wire = wireGuidelines; } break;
+      case "playbook": if (id) { html = playbookPage(id); title = P[id] ? P[id].title : "Playbook"; } else { html = playbook(); wire = wirePlaybook; } break;
+      case "units": html = id ? unitPage(id) : unitsPage(); if (id) title = id; break;
+      case "operations": html = id ? sopPage(id) : operations(); if (id && S[id]) title = S[id].title; break;
+      case "search": { const q = new URLSearchParams(query || "").get("q") || ""; html = searchPage(q); wire = wireSearch; break; }
+      default: html = notFound();
+    }
+    const main = $("#page");
+    main.innerHTML = html;
+    document.title = `${title} - Clinical Nutrition`;
+    document.querySelectorAll("nav.topnav a").forEach((a) => a.toggleAttribute("aria-current", false));
+    const cur = document.querySelector(`nav.topnav a[data-sec="${sec}"]`);
+    if (cur) cur.setAttribute("aria-current", "page");
+    if (wire) wire();
+    if (raw.includes("#reference")) { const r = $("#reference"); if (r) r.scrollIntoView(); }
+    else window.scrollTo(0, 0);
+    /* move focus to the page heading for screen readers on route change */
+    const h = main.querySelector("h1");
+    if (h && route.ran) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    $("#routeannounce").textContent = `${title} page loaded`;
+    route.ran = true;
+  }
+  function go(q) { location.hash = "#/search?q=" + encodeURIComponent(q); }
+  function wireHome() {
+    $("#homesearch").addEventListener("submit", (e) => { e.preventDefault(); const v = $("#homeq").value.trim(); if (v) go(v); });
+    document.querySelectorAll(".chip[data-q]").forEach((c) => c.addEventListener("click", () => go(c.dataset.q)));
+  }
+  function wireSearch() { $("#searchform").addEventListener("submit", (e) => { e.preventDefault(); go($("#sq").value.trim()); }); }
+  $("#suitesearch").addEventListener("submit", (e) => { e.preventDefault(); const v = $("#suiteq").value.trim(); if (v) go(v); });
+  window.addEventListener("hashchange", route);
+  route();
+}
+
+startApp({GUIDELINES,REFERENCE_DOCS,PLAYBOOK,UNITS,SOPS,NEWS,EVENTS,QUICK_LINKS});
+</script>
+</body>
+</html>
